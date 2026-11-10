@@ -19,13 +19,18 @@ try {
       .version,
   };
   result.sizes = {};
+  result.sizesOrigin = new URL(page.url()).origin;
   for (const path of [
     "web/pkg/skald_view_bg.wasm",
     "web/pkg/skald_view.js",
     "node_modules/pdfjs-dist/build/pdf.mjs",
     "node_modules/pdfjs-dist/build/pdf.worker.mjs",
   ]) {
-    const bytes = readFileSync(path);
+    const response = await page.request.get(
+      new URL(path, result.sizesOrigin + "/").href,
+    );
+    if (!response.ok()) throw Error(`Unable to measure served asset: ${path}`);
+    const bytes = await response.body();
     result.sizes[path] = {
       raw: bytes.length,
       gzip: gzipSync(bytes).length,
