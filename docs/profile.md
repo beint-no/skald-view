@@ -1,4 +1,4 @@
-# Skald View profile v0
+# Skald View profile v1 (`skald-pdf2-v1`)
 
 This is a restricted PDF 2.0 viewing profile, not a complete PDF 2.0 consumer.
 The parser does not repair input or fall back to another engine. A page that
@@ -8,11 +8,13 @@ fails interpretation is not presented as a successful partial rendering.
 
 - PDF 2.0 header, zero-generation indirect objects, xref streams and object streams.
 - Page trees with inherited resources and MediaBox; direct page CropBox.
-- Flate and Brotli stream filters, bounded filter chains, TIFF and PNG predictors
+- ASCII85, Flate and Brotli stream filters, bounded filter chains, TIFF and PNG predictors
   with 8-bit samples. Brotli large-window syntax is accepted up to 24 window bits.
 - Embedded Type0 / Identity-H / CIDFontType2 fonts with TrueType programs,
   CID widths, Identity or streamed CIDToGIDMap, and supported ToUnicode bfchar /
   bfrange mappings. Text is rendered from glyph outlines at PDF positions.
+- Extended axial DeviceRGB gradients with type-2 linear functions, and safe HTTP(S) URI links.
+- Readonly invisible signature fields; no cryptographic verification or signature creation.
 - Paths, cubic curves, fill/stroke, even-odd fills/clips, transforms, clipping,
   dashed strokes, caps, joins and Normal alpha compositing.
 - Form XObjects without transparency groups or external references.
@@ -20,15 +22,15 @@ fails interpretation is not presented as a successful partial rendering.
   sRGB/D65 semantics matching the explicit PDF image dictionary.
 - External gray soft masks, including on JXL images. The current mask scaler
   uses nearest sampling; high-quality arbitrary-size mask resampling is not claimed.
-- Text showing/positioning/spacing and invisible text; marked-content wrappers
+- Text showing/positioning/spacing, fill/stroke modes 0–2, and invisible text; marked-content wrappers
   without optional-content behavior.
 
 ## Explicitly outside this version
 
 PDF 1.x, classic/hybrid cross-reference tables, revision chains, encryption,
-forms, annotations/links, optional content, active actions, page rotation,
+interactive forms, annotations other than the supported URI links/invisible signatures, optional content, active actions, page rotation,
 inherited CropBox, UserUnit, page/Form transparency groups, non-Normal blending,
-shadings/patterns, hairline strokes, text stroke/clip modes, arbitrary CMaps,
+shadings other than the supported extended axial RGB subset, patterns, hairline strokes, text clip modes, arbitrary CMaps,
 nonembedded fonts, CFF/Type1/Type3 fonts, vertical writing, CMYK/ICC image color
 management, JPEG 2000, JBIG2, CCITT, inline images, stencil/explicit masks,
 nonidentity image Decode arrays, embedded image alpha, HDR, animation and
@@ -45,6 +47,7 @@ in other PDF viewers. Native HTML image support is independent of PDF support.
 | Input | 64 MiB |
 | Decoded stream | 16 MiB |
 | Tracked cache (including estimated scenes) | 128 MiB |
+| Single exact-frame cache (within combined budget) | 8 MiB |
 | Image / rendered page pixels | 16 million each |
 | Indexed objects | 100,000 |
 | Pages | 2,048 |

@@ -138,5 +138,92 @@
     "detail": "Shared image decoding and page cache reuse",
     "group": "More examples",
     "codec": "JXL + Brotli"
+  },
+  {
+    "id": "gallery-cover",
+    "title": "Gallery cover",
+    "detail": "Representative Skald PDF application output",
+    "group": "Skald application corpus",
+    "codec": "PDF 2.0",
+    "source": "/tests/skald-corpus/gallery-cover.pdf"
+  },
+  {
+    "id": "modern-chrome",
+    "title": "Modern chrome",
+    "detail": "Representative Skald PDF application output",
+    "group": "Skald application corpus",
+    "codec": "PDF 2.0",
+    "source": "/tests/skald-corpus/modern-chrome.pdf"
+  },
+  {
+    "id": "modern-surface",
+    "title": "Modern surface",
+    "detail": "Representative Skald PDF application output",
+    "group": "Skald application corpus",
+    "codec": "PDF 2.0",
+    "source": "/tests/skald-corpus/modern-surface.pdf"
+  },
+  {
+    "id": "reai-16-faktura-signert",
+    "title": "Reai 16 faktura signert",
+    "detail": "Representative Skald PDF application output",
+    "group": "Skald application corpus",
+    "codec": "PDF 2.0",
+    "source": "/tests/skald-corpus/reai-16-faktura-signert.pdf"
+  },
+  {
+    "id": "generic-reports",
+    "title": "Generic reports",
+    "detail": "Representative Skald PDF application output",
+    "group": "Skald application corpus",
+    "codec": "PDF 2.0",
+    "source": "/tests/skald-corpus/generic-reports.pdf"
+  },
+  {
+    "id": "payslips",
+    "title": "Payslips",
+    "detail": "Representative Skald PDF application output",
+    "group": "Skald application corpus",
+    "codec": "PDF 2.0",
+    "source": "/tests/skald-corpus/payslips.pdf"
+  },
+  {
+    "id": "pos-receipt",
+    "title": "Pos receipt",
+    "detail": "Representative Skald PDF application output",
+    "group": "Skald application corpus",
+    "codec": "PDF 2.0",
+    "source": "/tests/skald-corpus/pos-receipt.pdf"
+  },
+  {
+    "id": "invoice-order-offer",
+    "title": "Invoice order offer",
+    "detail": "Representative Skald PDF application output",
+    "group": "Skald application corpus",
+    "codec": "PDF 2.0",
+    "source": "/tests/skald-corpus/invoice-order-offer.pdf"
+  },
+  {
+    "id": "shopify-transactions",
+    "title": "Shopify transactions",
+    "detail": "Representative Skald PDF application output",
+    "group": "Skald application corpus",
+    "codec": "PDF 2.0",
+    "source": "/tests/skald-corpus/shopify-transactions.pdf"
+  },
+  {
+    "id": "inventory-stock-list",
+    "title": "Inventory stock list",
+    "detail": "Representative Skald PDF application output",
+    "group": "Skald application corpus",
+    "codec": "PDF 2.0",
+    "source": "/tests/skald-corpus/inventory-stock-list.pdf"
+  },
+  {
+    "id": "text-paint-modes",
+    "title": "Text fill and stroke",
+    "detail": "Separate fill/stroke colors · paint modes 0, 1 and 2",
+    "group": "Rendering details",
+    "codec": "Flate"
   }
 ]

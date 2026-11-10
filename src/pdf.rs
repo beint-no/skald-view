@@ -7,6 +7,7 @@ use std::{
 };
 
 #[derive(Debug, thiserror::Error)]
+#[non_exhaustive]
 pub enum Error {
     #[error("Malformed PDF: {0}")]
     Malformed(String),
@@ -29,6 +30,7 @@ pub(crate) fn limit(s: impl Into<String>) -> Error {
 #[derive(Clone, Debug)]
 pub struct Limits {
     pub source_bytes: usize,
+    pub frame_cache_bytes: usize,
     pub stream_bytes: usize,
     pub cached_bytes: usize,
     pub image_pixels: usize,
@@ -41,6 +43,7 @@ impl Default for Limits {
     fn default() -> Self {
         Self {
             source_bytes: 64 << 20,
+            frame_cache_bytes: 8 << 20,
             stream_bytes: 16 << 20,
             cached_bytes: 128 << 20,
             image_pixels: 16_000_000,
@@ -410,11 +413,20 @@ pub(crate) struct Page {
     pub info: PageInfo,
 }
 #[derive(Clone, Debug, Serialize)]
+#[non_exhaustive]
+pub struct LinkAnnotation {
+    pub rect: [f64; 4],
+    pub uri: String,
+}
+#[derive(Clone, Debug, Serialize)]
+#[non_exhaustive]
 pub struct PageInfo {
     pub width: f64,
     pub height: f64,
     pub x: f64,
     pub y: f64,
+    pub links: Vec<LinkAnnotation>,
+    pub signature_fields_present: bool,
 }
 
 pub struct Document {
@@ -425,6 +437,8 @@ pub struct Document {
     resolving: HashSet<u32>,
     pub(crate) pages: Vec<Page>,
     pub(crate) decoded: HashMap<Range<usize>, Arc<[u8]>>,
+    pub(crate) glyphs: HashMap<(usize, u16), Arc<vello_cpu::kurbo::BezPath>>,
+    pub(crate) frame: Option<(usize, u64, crate::RenderedPage)>,
     pub(crate) images: HashMap<Range<usize>, Arc<vello_cpu::Pixmap>>,
     pub(crate) scenes: HashMap<usize, Arc<Scene>>,
     pub(crate) cached_bytes: usize,
@@ -451,6 +465,8 @@ impl Document {
             pages: Vec::new(),
             decoded: HashMap::new(),
             images: HashMap::new(),
+            glyphs: HashMap::new(),
+            frame: None,
             scenes: HashMap::new(),
             cached_bytes: 0,
             scene_order: VecDeque::new(),
@@ -464,6 +480,9 @@ impl Document {
         let mut tail = Syntax::new(&d.source, pos + 9);
         let offset = tail.uint()?;
         let source = d.source.clone();
+        if source.get(offset..offset.saturating_add(4)) == Some(b"xref") {
+            return Err(unsupported("requires cross-reference stream"));
+        }
         let (xref_id, xref) = Self::indirect(&source, offset)?;
         let dict = xref.dict()?;
         if !is_name(dict, "Type", "XRef") {
@@ -549,9 +568,23 @@ impl Document {
         if !is_name(catalog, "Type", "Catalog") {
             return Err(bad("catalog type"));
         }
-        for key in ["OpenAction", "AA", "AcroForm", "OCProperties", "Perms"] {
+        for key in ["OpenAction", "AA", "OCProperties", "Perms"] {
             if catalog.contains_key(key) {
                 return Err(unsupported(format!("catalog /{key}")));
+            }
+        }
+        if let Some(form) = catalog.get("AcroForm") {
+            let form = d.resolve(form)?;
+            let form = form.dict()?;
+            for key in ["XFA", "NeedAppearances", "CO", "AA"] {
+                if form.contains_key(key) {
+                    return Err(unsupported(format!("AcroForm /{key}")));
+                }
+            }
+            let fields = d.resolve(required(form, "Fields")?)?;
+            for field in fields.array()? {
+                let field = d.resolve(field)?;
+                d.invisible_signature(field.dict()?)?;
             }
         }
         let pages = required(catalog, "Pages")?.clone();
@@ -586,6 +619,14 @@ impl Document {
         }
         if self.cached_bytes.saturating_add(n) > self.limits.cached_bytes {
             let mut released = 0;
+            self.glyphs.retain(|_, path| {
+                if Arc::strong_count(path) == 1 {
+                    released += std::mem::size_of_val(path.elements()) + 64;
+                    false
+                } else {
+                    true
+                }
+            });
             self.images.retain(|_, image| {
                 if Arc::strong_count(image) == 1 {
                     released += image.width() as usize * image.height() as usize * 4;
@@ -609,6 +650,30 @@ impl Document {
         }
         self.cached_bytes += n;
         Ok(())
+    }
+    fn invisible_signature(&mut self, d: &Dict) -> Result<()> {
+        if !is_name(d, "FT", "Sig")
+            || d.contains_key("Kids")
+            || d.contains_key("AA")
+            || d.contains_key("AP")
+        {
+            return Err(unsupported("only invisible signature fields are supported"));
+        }
+        let rect = required(d, "Rect")?.array()?;
+        if rect.len() != 4 || rect[0].num()? != rect[2].num()? || rect[1].num()? != rect[3].num()? {
+            return Err(unsupported("visible signature widgets"));
+        }
+        Ok(())
+    }
+    pub fn clear_frame_cache(&mut self) {
+        if let Some((_, _, frame)) = self.frame.take() {
+            self.cached_bytes -= frame.rgba.len();
+        }
+    }
+    pub fn frame_cache_bytes(&self) -> usize {
+        self.frame
+            .as_ref()
+            .map_or(0, |(_, _, frame)| frame.rgba.len())
     }
     fn indirect(source: &[u8], offset: usize) -> Result<(u32, Value)> {
         if offset >= source.len() {
@@ -790,7 +855,7 @@ impl Document {
             if self.pages.len() >= self.limits.pages {
                 return Err(limit("pages"));
             }
-            for k in ["Annots", "AA", "Group", "UserUnit"] {
+            for k in ["AA", "Group", "UserUnit"] {
                 if d.contains_key(k) {
                     return Err(unsupported(format!("page /{k}")));
                 }
@@ -811,10 +876,62 @@ impl Document {
             if b[2] <= b[0] || b[3] <= b[1] || b.iter().any(|v| v.abs() > 1_000_000.) {
                 return Err(bad("page bounds"));
             }
+            let mut links = Vec::new();
+            let mut signature_fields_present = false;
+            if let Some(annots) = d.get("Annots") {
+                let annots = self.resolve(annots)?;
+                for annotation in annots.array()? {
+                    let annotation = self.resolve(annotation)?;
+                    let a = annotation.dict()?;
+                    if is_name(a, "Subtype", "Widget") {
+                        self.invisible_signature(a)?;
+                        signature_fields_present = true;
+                        continue;
+                    }
+                    if !is_name(a, "Subtype", "Link")
+                        || a.contains_key("AA")
+                        || a.contains_key("AP")
+                        || a.contains_key("BS")
+                        || a.contains_key("QuadPoints")
+                        || !matches!(number(a, "F", 0.)?, 0. | 4.)
+                    {
+                        return Err(unsupported("annotation type/appearance/actions"));
+                    }
+                    let border = required(a, "Border")?.array()?;
+                    if border.len() != 3 || border.iter().any(|v| v.num().ok() != Some(0.)) {
+                        return Err(unsupported("link border"));
+                    }
+                    let action = self.resolve(required(a, "A")?)?;
+                    let action = action.dict()?;
+                    if !is_name(action, "S", "URI") {
+                        return Err(unsupported("link action"));
+                    }
+                    let uri = String::from_utf8(required(action, "URI")?.bytes()?.to_vec())
+                        .map_err(|_| bad("link URI"))?;
+                    if !(uri.starts_with("https://") || uri.starts_with("http://"))
+                        || uri.chars().any(|c| c.is_control())
+                    {
+                        return Err(unsupported("link URI scheme"));
+                    }
+                    let rect: [f64; 4] = required(a, "Rect")?
+                        .array()?
+                        .iter()
+                        .map(Value::num)
+                        .collect::<Result<Vec<_>>>()?
+                        .try_into()
+                        .map_err(|_| bad("link rectangle"))?;
+                    if rect[2] <= rect[0] || rect[3] <= rect[1] {
+                        return Err(unsupported("empty/reversed link rectangle"));
+                    }
+                    links.push(LinkAnnotation { rect, uri });
+                }
+            }
             self.pages.push(Page {
                 resources: resources.unwrap_or(Value::Dict(Dict::new())),
                 contents: d.get("Contents").cloned().unwrap_or(Value::Null),
                 info: PageInfo {
+                    links,
+                    signature_fields_present,
                     x: b[0],
                     y: b[1],
                     width: b[2] - b[0],

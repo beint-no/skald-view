@@ -1,0 +1,716 @@
+[
+  {
+    "fractionAbove32": 0.02441105788391334,
+    "height": 842,
+    "mae": 2.3219194869996334,
+    "page": "agreements-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.006600316440561782,
+    "height": 842,
+    "mae": 0.6470671459771398,
+    "page": "agreements-2.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.005285633439079214,
+    "height": 842,
+    "mae": 0.4727368920276108,
+    "page": "annual-account-notes-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.00016247029114676174,
+    "height": 792,
+    "mae": 0.03219490658216148,
+    "page": "attachment-image-1.png",
+    "width": 612
+  },
+  {
+    "fractionAbove32": 0.000029761904761904762,
+    "height": 140,
+    "mae": 0.4362797619047619,
+    "page": "code128-label-1.png",
+    "width": 360
+  },
+  {
+    "fractionAbove32": 0.0006725358287235569,
+    "height": 842,
+    "mae": 0.07410248848220122,
+    "page": "draft-watermark-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.000109375,
+    "height": 150,
+    "mae": 0.3265625,
+    "page": "ean13-label-1.png",
+    "width": 320
+  },
+  {
+    "fractionAbove32": 0.0017613636363636364,
+    "height": 100,
+    "mae": 1.076875,
+    "page": "ecomtools-gallery-soja-ba-l-1.png",
+    "width": 264
+  },
+  {
+    "fractionAbove32": 0.0017613636363636364,
+    "height": 100,
+    "mae": 1.076875,
+    "page": "ecomtools-soja-ba-l-1.png",
+    "width": 264
+  },
+  {
+    "fractionAbove32": 0.003693181818181818,
+    "height": 100,
+    "mae": 1.5836647727272728,
+    "page": "ecomtools-soja-ba-l-long-1.png",
+    "width": 264
+  },
+  {
+    "fractionAbove32": 0.0097761800762008,
+    "height": 842,
+    "mae": 1.0233120845223103,
+    "page": "ehf-watermark-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0012065790941988555,
+    "height": 842,
+    "mae": 0.23569740470914569,
+    "page": "gallery-cover-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0037447791292703533,
+    "height": 842,
+    "mae": 0.43700929793237575,
+    "page": "gallery-invoice-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.011766295514059324,
+    "height": 842,
+    "mae": 1.1990171236769835,
+    "page": "generic-reports-1.png",
+    "width": 1191
+  },
+  {
+    "fractionAbove32": 0.011833854861580619,
+    "height": 842,
+    "mae": 1.2296928068989312,
+    "page": "generic-reports-2.png",
+    "width": 1191
+  },
+  {
+    "fractionAbove32": 0.00017276246432567296,
+    "height": 842,
+    "mae": 0.04440618574383091,
+    "page": "generic-reports-3.png",
+    "width": 1191
+  },
+  {
+    "fractionAbove32": 0.0002933673469387755,
+    "height": 140,
+    "mae": 0.6261607142857143,
+    "page": "gs1128-label-1.png",
+    "width": 420
+  },
+  {
+    "fractionAbove32": 0.017589053707216758,
+    "height": 842,
+    "mae": 1.822829652154506,
+    "page": "inventory-stock-list-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.006417984504774506,
+    "height": 842,
+    "mae": 0.6593396794146248,
+    "page": "inventory-stock-list-2.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.011627895391286327,
+    "height": 842,
+    "mae": 1.2190419303671347,
+    "page": "invoice-order-offer-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0017605493471918889,
+    "height": 842,
+    "mae": 0.25911858948811556,
+    "page": "invoice-reminder-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0005455012832979962,
+    "height": 842,
+    "mae": 0.05753818010808398,
+    "page": "merged-reminder-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0006277001068086531,
+    "height": 842,
+    "mae": 0.06467901608506432,
+    "page": "merged-reminder-2.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.02378186325304086,
+    "height": 842,
+    "mae": 2.4200180538506912,
+    "page": "modern-chrome-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0012768217251988713,
+    "height": 842,
+    "mae": 0.1498917964577787,
+    "page": "modern-chrome-2.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0018223230084968675,
+    "height": 842,
+    "mae": 0.1825521289993464,
+    "page": "modern-surface-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0009853895327519967,
+    "height": 842,
+    "mae": 0.13663935340910902,
+    "page": "nested-cell-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0017112300530854948,
+    "height": 842,
+    "mae": 0.2137343772417861,
+    "page": "payslips-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0017112300530854948,
+    "height": 842,
+    "mae": 0.21373039184428255,
+    "page": "payslips-2.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.004902319838437955,
+    "height": 842,
+    "mae": 0.4985311352245022,
+    "page": "pos-receipt-1.png",
+    "width": 227
+  },
+  {
+    "fractionAbove32": 0.0025083095537948956,
+    "height": 842,
+    "mae": 0.2623123874125205,
+    "page": "pos-z-report-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0,
+    "height": 320,
+    "mae": 0.3688916015625,
+    "page": "qr-payment-1.png",
+    "width": 320
+  },
+  {
+    "fractionAbove32": 0.0,
+    "height": 360,
+    "mae": 0.42432291666666666,
+    "page": "qr-unicode-1.png",
+    "width": 360
+  },
+  {
+    "fractionAbove32": 0.006797095442299415,
+    "height": 842,
+    "mae": 0.7121227821262893,
+    "page": "reai-01-faktura-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.01051397678904494,
+    "height": 842,
+    "mae": 1.0040332222735895,
+    "page": "reai-02-faktura-logo-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.010457683049307338,
+    "height": 842,
+    "mae": 0.9494287929028041,
+    "page": "reai-03-faktura-rabatt-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.008182021074782,
+    "height": 842,
+    "mae": 0.7729469224760478,
+    "page": "reai-04-kreditnota-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0107087630920308,
+    "height": 842,
+    "mae": 1.018422998134834,
+    "page": "reai-05-betalt-kopi-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.010857219149037926,
+    "height": 842,
+    "mae": 1.0175546796537487,
+    "page": "reai-06-faktura-preview-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.009917163512888776,
+    "height": 842,
+    "mae": 0.9042129637009996,
+    "page": "reai-07-faktura-en-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.00954004527411564,
+    "height": 842,
+    "mae": 1.1023669275773567,
+    "page": "reai-08-faktura-mange-linjer-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.018806094469862426,
+    "height": 842,
+    "mae": 1.6559580696328653,
+    "page": "reai-08-faktura-mange-linjer-2.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0083887635702785,
+    "height": 842,
+    "mae": 0.7940585694017122,
+    "page": "reai-09-ordrebekreftelse-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.008230344019512507,
+    "height": 842,
+    "mae": 0.7868868465940793,
+    "page": "reai-10-purring-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.009554990514753942,
+    "height": 842,
+    "mae": 0.9434073554496325,
+    "page": "reai-11-betalingsoppfordring-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.006482747214207145,
+    "height": 842,
+    "mae": 0.6382260397902086,
+    "page": "reai-12-pakkseddel-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.010479602735576847,
+    "height": 842,
+    "mae": 1.033635260405873,
+    "page": "reai-13-ehf-forhandsvisning-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.009502183997831943,
+    "height": 842,
+    "mae": 0.8742801375759218,
+    "page": "reai-14-faktura-delbetalt-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.010690330628576895,
+    "height": 842,
+    "mae": 1.032473018858901,
+    "page": "reai-15-faktura-qr-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.01051397678904494,
+    "height": 842,
+    "mae": 1.0040332222735895,
+    "page": "reai-16-faktura-signert-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.009955522963860415,
+    "height": 842,
+    "mae": 0.959327523952239,
+    "page": "reai-17-respiro-rf41202600033-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.008182021074782,
+    "height": 842,
+    "mae": 0.7729469224760478,
+    "page": "reai-credit-note-rules-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.000666059557780293,
+    "height": 842,
+    "mae": 0.09804924755695132,
+    "page": "rowspan-table-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.011363862806676337,
+    "height": 596,
+    "mae": 1.2276130258732005,
+    "page": "shopify-transactions-1.png",
+    "width": 842
+  },
+  {
+    "fractionAbove32": 0.007807393709448581,
+    "height": 596,
+    "mae": 0.8095627620398859,
+    "page": "shopify-transactions-2.png",
+    "width": 842
+  },
+  {
+    "fractionAbove32": 0.0025377018603835546,
+    "height": 842,
+    "mae": 0.4007850236732612,
+    "page": "sticker-sheet-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.01036801160547753,
+    "height": 842,
+    "mae": 1.5056592644550368,
+    "page": "table-footer-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0023185049976884695,
+    "height": 842,
+    "mae": 0.3293766639034577,
+    "page": "table-footer-2.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0032456080919510914,
+    "height": 842,
+    "mae": 0.3503139496883419,
+    "page": "table-hairline-rules-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.008756914664668655,
+    "height": 842,
+    "mae": 1.0304429570055318,
+    "page": "tax-return-receipt-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0059860670503276,
+    "height": 842,
+    "mae": 0.582048374754898,
+    "page": "typical-agreement-cover-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0018158467375536036,
+    "height": 842,
+    "mae": 0.15630878461317732,
+    "page": "typical-audit-letter-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0017505858534330213,
+    "height": 842,
+    "mae": 0.2502271676577022,
+    "page": "typical-barcode-pack-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0019433794576671076,
+    "height": 842,
+    "mae": 0.16928075531253486,
+    "page": "typical-board-minutes-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0028541666666666667,
+    "height": 200,
+    "mae": 0.7713333333333333,
+    "page": "typical-code128-carton-1.png",
+    "width": 300
+  },
+  {
+    "fractionAbove32": 0.009554990514753942,
+    "height": 842,
+    "mae": 0.9434073554496325,
+    "page": "typical-collection-notice-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0015901736039152545,
+    "height": 842,
+    "mae": 0.14506846912911095,
+    "page": "typical-credit-application-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.008182021074782,
+    "height": 842,
+    "mae": 0.7729469224760478,
+    "page": "typical-credit-note-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0019124926270146184,
+    "height": 842,
+    "mae": 0.186470771094709,
+    "page": "typical-delivery-note-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0015104656538443145,
+    "height": 842,
+    "mae": 0.1588788678282772,
+    "page": "typical-dunning-run-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0017613636363636364,
+    "height": 100,
+    "mae": 1.076875,
+    "page": "typical-ean13-sticker-1.png",
+    "width": 264
+  },
+  {
+    "fractionAbove32": 0.010479602735576847,
+    "height": 842,
+    "mae": 1.033635260405873,
+    "page": "typical-ehf-preview-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0012932614899010028,
+    "height": 842,
+    "mae": 0.13732733265315883,
+    "page": "typical-expense-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.011540798611111111,
+    "height": 180,
+    "mae": 1.3777777777777778,
+    "page": "typical-gs1128-sscc-1.png",
+    "width": 320
+  },
+  {
+    "fractionAbove32": 0.0024475322418658035,
+    "height": 842,
+    "mae": 0.27339478152050883,
+    "page": "typical-inventory-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.010457683049307338,
+    "height": 842,
+    "mae": 0.9494287929028041,
+    "page": "typical-invoice-discount-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.009917163512888776,
+    "height": 842,
+    "mae": 0.9042129637009996,
+    "page": "typical-invoice-en-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.00954004527411564,
+    "height": 842,
+    "mae": 1.1023669275773567,
+    "page": "typical-invoice-multipage-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.018806094469862426,
+    "height": 842,
+    "mae": 1.6559580696328653,
+    "page": "typical-invoice-multipage-2.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.01051397678904494,
+    "height": 842,
+    "mae": 1.0040332222735895,
+    "page": "typical-invoice-no-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.009502183997831943,
+    "height": 842,
+    "mae": 0.8742801375759218,
+    "page": "typical-invoice-partial-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.010857219149037926,
+    "height": 842,
+    "mae": 1.0175546796537487,
+    "page": "typical-invoice-preview-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.010690330628576895,
+    "height": 842,
+    "mae": 1.032473018858901,
+    "page": "typical-invoice-qr-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0083887635702785,
+    "height": 842,
+    "mae": 0.7940585694017122,
+    "page": "typical-order-confirmation-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.006482747214207145,
+    "height": 842,
+    "mae": 0.6382260397902086,
+    "page": "typical-packing-slip-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0107087630920308,
+    "height": 842,
+    "mae": 1.018422998134834,
+    "page": "typical-paid-copy-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.00165294361459612,
+    "height": 842,
+    "mae": 0.14180243587495417,
+    "page": "typical-payment-advice-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0016101005914329895,
+    "height": 842,
+    "mae": 0.16605806325622918,
+    "page": "typical-payslip-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0015214254969790687,
+    "height": 842,
+    "mae": 0.15615435045991488,
+    "page": "typical-picking-list-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.005153118972086276,
+    "height": 842,
+    "mae": 0.5164098742208548,
+    "page": "typical-proforma-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.002172041639433117,
+    "height": 842,
+    "mae": 0.3070753758229846,
+    "page": "typical-purchase-order-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.002032552726808972,
+    "height": 842,
+    "mae": 0.2996326459851106,
+    "page": "typical-quote-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.004312480025567274,
+    "height": 596,
+    "mae": 0.4267927053371684,
+    "page": "typical-receipt-1.png",
+    "width": 420
+  },
+  {
+    "fractionAbove32": 0.008230344019512507,
+    "height": 842,
+    "mae": 0.7868868465940793,
+    "page": "typical-reminder-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0016459691689649125,
+    "height": 842,
+    "mae": 0.14229712334008193,
+    "page": "typical-reminder-en-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.007100112411558553,
+    "height": 426,
+    "mae": 0.8326658897044237,
+    "page": "typical-shipping-label-1.png",
+    "width": 284
+  },
+  {
+    "fractionAbove32": 0.002976095585773725,
+    "height": 842,
+    "mae": 0.32909469703008176,
+    "page": "typical-statement-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0015946571761067448,
+    "height": 842,
+    "mae": 0.19126321159272425,
+    "page": "typical-sticker-sheet-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0012554002136173062,
+    "height": 842,
+    "mae": 0.13445535557716526,
+    "page": "typical-timesheet-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0008072916666666667,
+    "height": 120,
+    "mae": 1.0873958333333333,
+    "page": "typical-upca-shelf-1.png",
+    "width": 240
+  },
+  {
+    "fractionAbove32": 0.0012588874364329098,
+    "height": 842,
+    "mae": 0.1423035996110252,
+    "page": "typical-vat-return-1.png",
+    "width": 596
+  },
+  {
+    "fractionAbove32": 0.0008630952380952381,
+    "height": 140,
+    "mae": 0.6675595238095238,
+    "page": "upca-label-1.png",
+    "width": 360
+  }
+]

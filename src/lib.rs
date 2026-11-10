@@ -5,5 +5,5 @@ mod content;
 mod pdf;
 mod render;
 pub use content::TextRun;
-pub use pdf::{Document, Error, Limits, PageInfo};
+pub use pdf::{Document, Error, Limits, LinkAnnotation, PageInfo};
 pub use render::RenderedPage;

@@ -1,0 +1,68 @@
+[
+  {
+    "allPagesCacheBytes": 14371919,
+    "finalCacheBytes": 14371919,
+    "firstCacheBytes": 1878057,
+    "frameBytes": 2007328,
+    "pages": 8,
+    "warmMeanMs": 0.9171945800000001,
+    "revision": "before",
+    "trial": 1,
+    "maxRssBytes": 33538048
+  },
+  {
+    "allPagesCacheBytes": 4553471,
+    "finalCacheBytes": 4553471,
+    "firstCacheBytes": 2434001,
+    "frameBytes": 2007328,
+    "pages": 8,
+    "warmMeanMs": 0.01608292,
+    "revision": "after",
+    "trial": 1,
+    "maxRssBytes": 19562496
+  },
+  {
+    "allPagesCacheBytes": 14371919,
+    "finalCacheBytes": 14371919,
+    "firstCacheBytes": 1878057,
+    "frameBytes": 2007328,
+    "pages": 8,
+    "warmMeanMs": 0.86458166,
+    "revision": "before",
+    "trial": 2,
+    "maxRssBytes": 33390592
+  },
+  {
+    "allPagesCacheBytes": 4553471,
+    "finalCacheBytes": 4553471,
+    "firstCacheBytes": 2434001,
+    "frameBytes": 2007328,
+    "pages": 8,
+    "warmMeanMs": 0.01517041,
+    "revision": "after",
+    "trial": 2,
+    "maxRssBytes": 17563648
+  },
+  {
+    "allPagesCacheBytes": 14371919,
+    "finalCacheBytes": 14371919,
+    "firstCacheBytes": 1878057,
+    "frameBytes": 2007328,
+    "pages": 8,
+    "warmMeanMs": 0.8913004200000001,
+    "revision": "before",
+    "trial": 3,
+    "maxRssBytes": 32997376
+  },
+  {
+    "allPagesCacheBytes": 4553471,
+    "finalCacheBytes": 4553471,
+    "firstCacheBytes": 2434001,
+    "frameBytes": 2007328,
+    "pages": 8,
+    "warmMeanMs": 0.01631958,
+    "revision": "after",
+    "trial": 3,
+    "maxRssBytes": 17448960
+  }
+]

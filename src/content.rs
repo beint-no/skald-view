@@ -18,8 +18,15 @@ pub(crate) struct Clip {
 pub(crate) enum Paint {
     Solid([f32; 3], f32),
     Image(Arc<Pixmap>, f32),
+    Gradient(vello_cpu::peniko::Gradient, Affine),
+}
+#[derive(Clone)]
+pub(crate) struct Glyph {
+    pub outline: Arc<BezPath>,
+    pub transform: Affine,
 }
 pub(crate) struct Draw {
+    pub glyphs: Option<Vec<Glyph>>,
     pub path: Arc<BezPath>,
     pub transform: Affine,
     pub clips: Vec<Clip>,
@@ -87,7 +94,7 @@ struct Font {
     default_width: f64,
     gids: Option<Arc<[u8]>>,
     unicode: HashMap<u16, String>,
-    paths: HashMap<u16, BezPath>,
+    program_key: usize,
 }
 impl Font {
     fn load(doc: &mut Document, value: &Value) -> Result<Self> {
@@ -156,10 +163,13 @@ impl Font {
             default_width: number(cd, "DW", 1000.)?,
             gids,
             unicode,
-            paths: HashMap::new(),
+            program_key: match &*program {
+                Value::Stream(_, range) => range.start,
+                _ => return Err(bad("font stream")),
+            },
         })
     }
-    fn glyph(&mut self, cid: u16) -> Result<&BezPath> {
+    fn glyph(&self, cid: u16, doc: &mut Document) -> Result<Arc<BezPath>> {
         let gid = if let Some(map) = &self.gids {
             let i = cid as usize * 2;
             if i + 2 > map.len() {
@@ -169,16 +179,20 @@ impl Font {
         } else {
             cid
         };
-        if !self.paths.contains_key(&gid) {
-            let face = ttf_parser::Face::parse(&self.data, 0).map_err(|_| bad("font"))?;
-            if gid >= face.number_of_glyphs() {
-                return Err(bad("glyph index"));
-            }
-            let mut path = Outline(BezPath::new());
-            face.outline_glyph(ttf_parser::GlyphId(gid), &mut path);
-            self.paths.insert(gid, path.0);
+        let key = (self.program_key, gid);
+        if let Some(path) = doc.glyphs.get(&key) {
+            return Ok(path.clone());
         }
-        Ok(&self.paths[&gid])
+        let face = ttf_parser::Face::parse(&self.data, 0).map_err(|_| bad("font"))?;
+        if gid >= face.number_of_glyphs() {
+            return Err(bad("glyph index"));
+        }
+        let mut outline = Outline(BezPath::new());
+        face.outline_glyph(ttf_parser::GlyphId(gid), &mut outline);
+        doc.reserve_cache(std::mem::size_of_val(outline.0.elements()) + 64)?;
+        let outline = Arc::new(outline.0);
+        doc.glyphs.insert(key, outline.clone());
+        Ok(outline)
     }
 }
 struct Outline(BezPath);
@@ -323,13 +337,26 @@ impl Document {
             scene: &mut scene,
             fonts: HashMap::new(),
             operations: 0,
+            bounds: Rect::new(
+                page.info.x,
+                page.info.y,
+                page.info.x + page.info.width,
+                page.info.y + page.info.height,
+            ),
         };
         let bytes = interpreter.contents(&page.contents)?;
         interpreter.run(&bytes, resources.dict()?, State::default(), 0)?;
         let estimate = scene
             .draws
             .iter()
-            .map(|d| std::mem::size_of_val(d.path.elements()) + d.clips.len() * 64 + 256)
+            .map(|d| {
+                std::mem::size_of_val(d.path.elements())
+                    + d.glyphs
+                        .as_ref()
+                        .map_or(0, |g| std::mem::size_of_val(g.as_slice()))
+                    + d.clips.len() * 64
+                    + 256
+            })
             .sum::<usize>()
             + scene.text.iter().map(|t| t.text.len() + 128).sum::<usize>();
         self.reserve_cache(estimate)?;
@@ -345,6 +372,7 @@ struct Interpreter<'a> {
     scene: &'a mut Scene,
     fonts: HashMap<String, Font>,
     operations: usize,
+    bounds: Rect,
 }
 impl Interpreter<'_> {
     fn contents(&mut self, v: &Value) -> Result<Vec<u8>> {
@@ -561,6 +589,7 @@ impl Interpreter<'_> {
                     let transform = path_ctm.take().unwrap_or(state.ctm);
                     if matches!(op, b"f" | b"F" | b"f*" | b"B" | b"B*" | b"b" | b"b*") {
                         self.scene.draws.push(Draw {
+                            glyphs: None,
                             path: p.clone(),
                             transform,
                             clips: state.clips.clone(),
@@ -571,6 +600,7 @@ impl Interpreter<'_> {
                     }
                     if matches!(op, b"S" | b"s" | b"B" | b"B*" | b"b" | b"b*") {
                         self.scene.draws.push(Draw {
+                            glyphs: None,
                             path: p.clone(),
                             transform,
                             clips: state.clips.clone(),
@@ -641,12 +671,10 @@ impl Interpreter<'_> {
                 b"Ts" => state.rise = n(1)?[0],
                 b"Tr" => {
                     let a = n(1)?;
-                    state.text_mode = if a[0] == 0. {
-                        0
-                    } else if a[0] == 3. {
-                        3
+                    state.text_mode = if (0.0..=3.0).contains(&a[0]) && a[0].fract() == 0. {
+                        a[0] as usize
                     } else {
-                        return Err(unsupported("text render mode"));
+                        return Err(unsupported(format!("text render mode {}", a[0])));
                     };
                 }
                 b"Tj" | b"TJ" => {
@@ -681,6 +709,7 @@ impl Interpreter<'_> {
                     if is_name(d, "Subtype", "Image") {
                         let image = self.doc.image(&object, 0)?;
                         self.scene.draws.push(Draw {
+                            glyphs: None,
                             path: Arc::new(Rect::new(0., 0., 1., 1.).to_path(0.1)),
                             transform: state.ctm,
                             clips: state.clips.clone(),
@@ -724,6 +753,76 @@ impl Interpreter<'_> {
                     } else {
                         return Err(unsupported("XObject subtype"));
                     }
+                }
+                b"sh" => {
+                    if args.len() != 1 {
+                        return Err(bad("sh arity"));
+                    }
+                    let shadings = self.doc.resolve(required(resources, "Shading")?)?;
+                    let shading = self
+                        .doc
+                        .resolve(required(shadings.dict()?, args[0].name()?)?)?;
+                    let d = shading.dict()?;
+                    if number(d, "ShadingType", 0.)? != 2.
+                        || !is_name(d, "ColorSpace", "DeviceRGB")
+                        || d.contains_key("Background")
+                        || d.contains_key("BBox")
+                        || d.contains_key("Domain")
+                    {
+                        return Err(unsupported("axial RGB shading profile"));
+                    }
+                    let coords = required(d, "Coords")?
+                        .array()?
+                        .iter()
+                        .map(Value::num)
+                        .collect::<Result<Vec<_>>>()?;
+                    if coords.len() != 4 || coords[0] == coords[2] && coords[1] == coords[3] {
+                        return Err(bad("shading coordinates"));
+                    }
+                    let extend = required(d, "Extend")?.array()?;
+                    if extend.len() != 2 || !extend.iter().all(|v| matches!(v, Value::Bool(true))) {
+                        return Err(unsupported("unextended shading"));
+                    }
+                    let f = self.doc.resolve(required(d, "Function")?)?;
+                    let f = f.dict()?;
+                    if number(f, "FunctionType", 0.)? != 2.
+                        || number(f, "N", 0.)? != 1.
+                        || f.contains_key("Range")
+                    {
+                        return Err(unsupported("shading function"));
+                    }
+                    let domain = required(f, "Domain")?.array()?;
+                    if domain.len() != 2 || domain[0].num()? != 0. || domain[1].num()? != 1. {
+                        return Err(unsupported("shading domain"));
+                    }
+                    let rgb =
+                        |key| -> Result<vello_cpu::color::AlphaColor<vello_cpu::color::Srgb>> {
+                            let v = required(f, key)?.array()?;
+                            if v.len() != 3 {
+                                return Err(bad("shading RGB"));
+                            }
+                            Ok(vello_cpu::color::AlphaColor::new([
+                                unit(v[0].num()?)?,
+                                unit(v[1].num()?)?,
+                                unit(v[2].num()?)?,
+                                state.fill_alpha,
+                            ]))
+                        };
+                    let gradient = vello_cpu::peniko::Gradient::new_linear(
+                        (coords[0], coords[1]),
+                        (coords[2], coords[3]),
+                    )
+                    .with_interpolation_cs(vello_cpu::color::ColorSpaceTag::Srgb)
+                    .with_stops([rgb("C0")?, rgb("C1")?]);
+                    self.scene.draws.push(Draw {
+                        glyphs: None,
+                        path: Arc::new(self.bounds.to_path(0.1)),
+                        transform: Affine::IDENTITY,
+                        clips: state.clips.clone(),
+                        paint: Paint::Gradient(gradient, state.ctm),
+                        stroke: None,
+                        even: false,
+                    });
                 }
                 b"gs" => {
                     if args.len() != 1 {
@@ -799,7 +898,8 @@ impl Interpreter<'_> {
         let font = self.fonts.get_mut(&state.font).unwrap();
         let face = ttf_parser::Face::parse(&font.data, 0).map_err(|_| bad("font"))?;
         let units = face.units_per_em() as f64;
-        let mut path = BezPath::new();
+        let mut glyphs = Vec::new();
+        let mut nodes = 0;
         let mut advance = 0.;
         let mut text = String::new();
         if bytes.len() / 2 > self.doc.limits.operations.saturating_sub(self.operations) {
@@ -815,11 +915,14 @@ impl Interpreter<'_> {
                 .unwrap_or_else(|| "\u{fffd}".into());
             text.push_str(&unicode);
             let transform = Affine::translate((advance, 0.)) * Affine::scale(state.size / units);
-            let glyph = font.glyph(cid)?;
-            if path.elements().len() + glyph.elements().len() > self.doc.limits.operations {
-                return Err(limit("glyph outline nodes"));
+            if state.text_mode != 3 {
+                let outline = font.glyph(cid, self.doc)?;
+                nodes += outline.elements().len();
+                if nodes > self.doc.limits.operations {
+                    return Err(limit("glyph outline nodes"));
+                }
+                glyphs.push(Glyph { outline, transform });
             }
-            path.extend(glyph.elements().iter().copied().map(|el| transform * el));
             // Identity-H codes are two bytes; PDF word spacing only applies to a
             // single-byte 0x20 code, so it never applies here.
             advance += font.widths.get(&cid).copied().unwrap_or(font.default_width) / 1000.
@@ -830,13 +933,25 @@ impl Interpreter<'_> {
             * state.tm
             * Affine::translate((0., state.rise))
             * Affine::scale_non_uniform(state.hscale, 1.);
-        if state.text_mode == 0 {
+        if matches!(state.text_mode, 0 | 2) {
             self.scene.draws.push(Draw {
-                path: Arc::new(path),
+                glyphs: Some(glyphs.clone()),
+                path: Arc::new(BezPath::new()),
                 transform,
                 clips: state.clips.clone(),
                 paint: Paint::Solid(state.fill, state.fill_alpha),
                 stroke: None,
+                even: false,
+            });
+        }
+        if matches!(state.text_mode, 1 | 2) {
+            self.scene.draws.push(Draw {
+                glyphs: Some(glyphs),
+                path: Arc::new(BezPath::new()),
+                transform,
+                clips: state.clips.clone(),
+                paint: Paint::Solid(state.stroke, state.stroke_alpha),
+                stroke: Some(state.line.clone()),
                 even: false,
             });
         }

@@ -1,8 +1,7 @@
 name: CI
 on:
   pull_request:
-  push:
-    branches: [main]
+  workflow_dispatch:
 permissions:
   contents: read
 concurrency:
@@ -19,6 +18,8 @@ jobs:
           cache: npm
       - name: Set up pinned Rust
         run: rustup show
+      - name: Install independent reference renderer
+        run: sudo apt-get update && sudo apt-get install --yes mupdf-tools
       - name: Native tests and lint
         run: |
           cargo fmt --check
@@ -37,12 +38,15 @@ jobs:
         run: |
           npm ci --ignore-scripts
           npm test
+          npm run format:check
           npm run build
           cargo clippy --locked --target wasm32-unknown-unknown --lib -- -D warnings
       - name: Install browser engines
         run: npx playwright install --with-deps chromium firefox webkit
       - name: Three-browser tests
         run: npm run test:browser -- --workers=2
+      - name: Independent Skald corpus comparison
+        run: npm run verify:corpus
       - name: Native performance probe
         run: |
           mkdir -p bench-results

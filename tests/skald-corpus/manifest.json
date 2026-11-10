@@ -1,0 +1,463 @@
+{
+  "source": "https://github.com/beint-no/skald-pdf",
+  "revision": "a23a1a45f2dfdb6c1b3f04d07e9165edb8b572b9",
+  "command": "./gradlew :skald-layout:test --rerun-tasks",
+  "fictional": true,
+  "files": [
+    {
+      "file": "agreements.pdf",
+      "bytes": 23802,
+      "sha256": "9e88f53cd68c188d0f7a2159f8eb7b40a5e0afcce5c64d429da006481503bd92"
+    },
+    {
+      "file": "annual-account-notes.pdf",
+      "bytes": 21682,
+      "sha256": "9dbeffba171cb47cad133139756f13b96e1c4d049de36a18367fec4c0fa41d37"
+    },
+    {
+      "file": "attachment-image.pdf",
+      "bytes": 13881,
+      "sha256": "0644dd8e564d9de53abdf9e4c3b142282d9a68397cffd39371f036168b6180e8"
+    },
+    {
+      "file": "code128-label.pdf",
+      "bytes": 9597,
+      "sha256": "890dff32190bda67a9fdbbb9944291c758b7096288755985caf5f2c9e96488b6"
+    },
+    {
+      "file": "draft-watermark.pdf",
+      "bytes": 16737,
+      "sha256": "7d777bf9199489e5658c0fcf908c0ae92756173e05b477556a9c941789b88644"
+    },
+    {
+      "file": "ean13-label.pdf",
+      "bytes": 9534,
+      "sha256": "61fa2793499f4fdcc77d6ee5926a7182af30efabb9b49dafa391880c791ff3e9"
+    },
+    {
+      "file": "ecomtools-gallery-soja-ba-l.pdf",
+      "bytes": 13196,
+      "sha256": "21980f11bf0eb78fe9e01f4e4a1ff0a11368d783d0e5e8b279a3023e9845c233"
+    },
+    {
+      "file": "ecomtools-soja-ba-l-long.pdf",
+      "bytes": 13832,
+      "sha256": "d10dd69a232edf5d2cb50f09ffb8e3aff3a40f12a4287e53b1520614c4facb62"
+    },
+    {
+      "file": "ecomtools-soja-ba-l.pdf",
+      "bytes": 13196,
+      "sha256": "21980f11bf0eb78fe9e01f4e4a1ff0a11368d783d0e5e8b279a3023e9845c233"
+    },
+    {
+      "file": "ehf-watermark.pdf",
+      "bytes": 28847,
+      "sha256": "7b9aa10d55c3a44c87f13074cf0546dff10100228969bd5a82ecd4cf666e11d1"
+    },
+    {
+      "file": "gallery-cover.pdf",
+      "bytes": 18398,
+      "sha256": "d0a6006b14b9a7684133402a1cab1c95316dabdc4faf12a7e56392a10860cad5"
+    },
+    {
+      "file": "gallery-invoice.pdf",
+      "bytes": 34071,
+      "sha256": "eb2097c8101eaade553da991669cf2896500efa80aad735d304244351193f536"
+    },
+    {
+      "file": "generic-reports.pdf",
+      "bytes": 45391,
+      "sha256": "c4152e9129021cbd7dd07514679aab54430f51da22e7c05d5edadfae641013ec"
+    },
+    {
+      "file": "gs1128-label.pdf",
+      "bytes": 9444,
+      "sha256": "8f6e63b3380e212fa06dd22070b57f6d4bc337ac991cb500c9bbc633aaf25c79"
+    },
+    {
+      "file": "inventory-stock-list.pdf",
+      "bytes": 33030,
+      "sha256": "d06732749b4668db53aafa814ecccdb8215f62622823ac85b9baa3916ae5c705"
+    },
+    {
+      "file": "invoice-order-offer.pdf",
+      "bytes": 31722,
+      "sha256": "bf5d85261773d49f86da8858a23a52635dc1f2aae8f72a775a372f7d4fb524f5"
+    },
+    {
+      "file": "invoice-reminder.pdf",
+      "bytes": 22841,
+      "sha256": "88182de174600225ff04a4b42ee8ecf536ef578efe978d697dad08ce888087d9"
+    },
+    {
+      "file": "merged-reminder.pdf",
+      "bytes": 25610,
+      "sha256": "fcf3868e619f9dd2937b5a765714ea2648c2bebdb0622f0ee9cf3d2dea36400e"
+    },
+    {
+      "file": "modern-chrome.pdf",
+      "bytes": 23321,
+      "sha256": "089ada8601281bd09cf306ff6c394585dbdb08a7d78282a3d011650c48990049"
+    },
+    {
+      "file": "modern-surface.pdf",
+      "bytes": 19534,
+      "sha256": "a3c1e98f315f9324aef15163f2aa0b01ffbbf98c30b5a6cabfbdf95773687963"
+    },
+    {
+      "file": "nested-cell.pdf",
+      "bytes": 19053,
+      "sha256": "2ad8d28ff48a11341aec4c90bcd92dedaeffaf145465abb6f3a9bdeb6c24834c"
+    },
+    {
+      "file": "payslips.pdf",
+      "bytes": 25829,
+      "sha256": "097994351a4de51d7ff766c4c13da25eb5842a347953904c7696c67320363c67"
+    },
+    {
+      "file": "pos-receipt.pdf",
+      "bytes": 22892,
+      "sha256": "56101c2c2b275661e4541c6e2836f60acbf1aa24a892dda101f04095dcf55626"
+    },
+    {
+      "file": "pos-z-report.pdf",
+      "bytes": 23303,
+      "sha256": "f42aceda14c2f29c8204de663b724c51e90f204a1fbd5730706c4e46d62c9fb5"
+    },
+    {
+      "file": "qr-payment.pdf",
+      "bytes": 2561,
+      "sha256": "8801c3f503f8b2ec99c7830a47a7cac667789254ad3ddff921f3e348ab0e2a52"
+    },
+    {
+      "file": "qr-unicode.pdf",
+      "bytes": 3150,
+      "sha256": "187bd4e090502628e5cfa7502d6352f9136fbf6b50302c4a5bc48036872961ab"
+    },
+    {
+      "file": "reai-01-faktura.pdf",
+      "bytes": 26504,
+      "sha256": "7a65073f76906ee321462c7a582687f473b057868129612a1ef916ca1e07b0e3"
+    },
+    {
+      "file": "reai-02-faktura-logo.pdf",
+      "bytes": 29482,
+      "sha256": "a555f131e2b0ec6e2be0540897157735f0c6cfb22298efae6c2d3f64e6eac9c2"
+    },
+    {
+      "file": "reai-03-faktura-rabatt.pdf",
+      "bytes": 29439,
+      "sha256": "a5a788a674a3a87aa81ac9e09c4ddfc88d79503f5ca7b4d4dd61833ba3d42a5a"
+    },
+    {
+      "file": "reai-04-kreditnota.pdf",
+      "bytes": 28353,
+      "sha256": "be20573e4a1e11368b2888b808463a584242e91b812fcd955e87b8ba21a2240d"
+    },
+    {
+      "file": "reai-05-betalt-kopi.pdf",
+      "bytes": 29298,
+      "sha256": "f6c13179783abcac184a7e0f0cdf091f262924077bb20faad2b57dfe4fb78c6a"
+    },
+    {
+      "file": "reai-06-faktura-preview.pdf",
+      "bytes": 29834,
+      "sha256": "72c221a30f848466c4f52a6bb89b49e1d49efdbeef4eb3f70aaa0983df01dd4c"
+    },
+    {
+      "file": "reai-07-faktura-en.pdf",
+      "bytes": 28703,
+      "sha256": "a79d4ff74b9aea83a4a073ea4095f69125698d3cc36f44cafb676c6e06584025"
+    },
+    {
+      "file": "reai-08-faktura-mange-linjer.pdf",
+      "bytes": 30840,
+      "sha256": "de06a70f390f0878cd41ef245458b6f8ab4b3b6ce603dcd25ed21d241263c45a"
+    },
+    {
+      "file": "reai-09-ordrebekreftelse.pdf",
+      "bytes": 28428,
+      "sha256": "6543f63427d4a84afd5a64f27a33c22cb5863e84258da657881f06f4c8601588"
+    },
+    {
+      "file": "reai-10-purring.pdf",
+      "bytes": 28403,
+      "sha256": "090b26fbc83811fdab830e8c36eba539e6f732dba757fd26b73e3bb4d65148cd"
+    },
+    {
+      "file": "reai-11-betalingsoppfordring.pdf",
+      "bytes": 29323,
+      "sha256": "32f3edd7c1c132896d27a313a1745707825b112f16aced3150e93d6a60329608"
+    },
+    {
+      "file": "reai-12-pakkseddel.pdf",
+      "bytes": 28786,
+      "sha256": "5f35b3e42c9dd5a7f23ab1dc9411f4df8ffc008de140a3906f4b6b5b62276f3f"
+    },
+    {
+      "file": "reai-13-ehf-forhandsvisning.pdf",
+      "bytes": 29982,
+      "sha256": "05d47465a5a0e3472afe23201306d2b4b5e6d03c8f6426481a3016f37078c0fb"
+    },
+    {
+      "file": "reai-14-faktura-delbetalt.pdf",
+      "bytes": 28960,
+      "sha256": "2cbe8e82cb7f039ad011ad99ebfc81978681bcef3ac52e01f0dd197b0ac7913f"
+    },
+    {
+      "file": "reai-15-faktura-qr.pdf",
+      "bytes": 31531,
+      "sha256": "5fc29f1d848daa7d415d6629a75b0688b467f8d651884841a5cfdf41168ec526"
+    },
+    {
+      "file": "reai-16-faktura-signert.pdf",
+      "bytes": 46274,
+      "sha256": "485013cb89ad9d28701be3d5bc73a663991cb90af28f724fd42794895833b7f3"
+    },
+    {
+      "file": "reai-17-respiro-rf41202600033.pdf",
+      "bytes": 29009,
+      "sha256": "c87dac6c692a40687f2ac04614457a9fadf4b8bd23742f0251125a710a075d47"
+    },
+    {
+      "file": "reai-credit-note-rules.pdf",
+      "bytes": 28353,
+      "sha256": "be20573e4a1e11368b2888b808463a584242e91b812fcd955e87b8ba21a2240d"
+    },
+    {
+      "file": "rowspan-table.pdf",
+      "bytes": 18069,
+      "sha256": "4bc80492d63207fe025efdfc594f876a1e11d402f6ba61ccad18a5652938f768"
+    },
+    {
+      "file": "shopify-transactions.pdf",
+      "bytes": 37497,
+      "sha256": "1c701cf4195547dff73e8c812c645d06829217f6295cdf900d576913f3bb5ff6"
+    },
+    {
+      "file": "sticker-sheet.pdf",
+      "bytes": 13356,
+      "sha256": "83ffc58cf6b99e2293f1377389f88351d004bfc7afce03305b7cae4dd23f31cf"
+    },
+    {
+      "file": "table-footer.pdf",
+      "bytes": 22391,
+      "sha256": "86b94949af2a909a43e71fd8f1895ff341b230fafc362ce350d7756f309dff19"
+    },
+    {
+      "file": "table-hairline-rules.pdf",
+      "bytes": 13523,
+      "sha256": "ed77c1b85ef820a0eb7db72e19f051675f59f3f79b688398e53d0eff36596e9e"
+    },
+    {
+      "file": "tax-return-receipt.pdf",
+      "bytes": 26548,
+      "sha256": "ff37cca0bb1c476995a3dc078819bc00c6a00cad6774835a522686c5af9cda14"
+    },
+    {
+      "file": "typical-agreement-cover.pdf",
+      "bytes": 20849,
+      "sha256": "b7ed02b8b6faee72d4e9497a5d64f30db5b60ca6479e1674200315e13c7c9d8b"
+    },
+    {
+      "file": "typical-audit-letter.pdf",
+      "bytes": 18512,
+      "sha256": "01415c8533a116fd8b70baf438d2d89ab8cb6ae237c1cd594ca2387b3d256a64"
+    },
+    {
+      "file": "typical-barcode-pack.pdf",
+      "bytes": 20063,
+      "sha256": "ab70257340eaad44ab710b2d992a4d4c7a1acc71ef32e0d55ce26e89a1ed59ab"
+    },
+    {
+      "file": "typical-board-minutes.pdf",
+      "bytes": 19254,
+      "sha256": "d6df4d2725dc1db42546b43cab4e639635aecbd9a8098fcf65c7b8f4e778b608"
+    },
+    {
+      "file": "typical-code128-carton.pdf",
+      "bytes": 18388,
+      "sha256": "4f01bcc61ccd24c553f7566a38401b3b451c0861f694bc603a73c3527da4c4d7"
+    },
+    {
+      "file": "typical-collection-notice.pdf",
+      "bytes": 29323,
+      "sha256": "32f3edd7c1c132896d27a313a1745707825b112f16aced3150e93d6a60329608"
+    },
+    {
+      "file": "typical-credit-application.pdf",
+      "bytes": 18889,
+      "sha256": "8bdaf1eb9ecb1bd3d6e67db8dbd383377837058cd5db8119e0e111231d92cf47"
+    },
+    {
+      "file": "typical-credit-note.pdf",
+      "bytes": 28353,
+      "sha256": "be20573e4a1e11368b2888b808463a584242e91b812fcd955e87b8ba21a2240d"
+    },
+    {
+      "file": "typical-delivery-note.pdf",
+      "bytes": 21909,
+      "sha256": "872b2c29bd9e0954ead78da29fc66af65fcfc6cfc84dc2a111088b53bb39bb82"
+    },
+    {
+      "file": "typical-dunning-run.pdf",
+      "bytes": 20400,
+      "sha256": "188e897ae42b2fbcd0514019595dcc7c4968f61a143a7f91d85010f8141cdbfb"
+    },
+    {
+      "file": "typical-ean13-sticker.pdf",
+      "bytes": 13196,
+      "sha256": "21980f11bf0eb78fe9e01f4e4a1ff0a11368d783d0e5e8b279a3023e9845c233"
+    },
+    {
+      "file": "typical-ehf-preview.pdf",
+      "bytes": 29982,
+      "sha256": "05d47465a5a0e3472afe23201306d2b4b5e6d03c8f6426481a3016f37078c0fb"
+    },
+    {
+      "file": "typical-expense.pdf",
+      "bytes": 20337,
+      "sha256": "b471ca6d70061287d1988577036cd17a069cfed2712a5074559c3903dd62debf"
+    },
+    {
+      "file": "typical-gs1128-sscc.pdf",
+      "bytes": 17646,
+      "sha256": "525445f13b5cf70705ea98f10639d5b5c190384dbb5bd39a96a1786f96ccf76c"
+    },
+    {
+      "file": "typical-inventory.pdf",
+      "bytes": 21245,
+      "sha256": "bc0902d837364ac744ae1a62c0862940e0532c6d129fb8926aeed1645d1d024d"
+    },
+    {
+      "file": "typical-invoice-discount.pdf",
+      "bytes": 29439,
+      "sha256": "a5a788a674a3a87aa81ac9e09c4ddfc88d79503f5ca7b4d4dd61833ba3d42a5a"
+    },
+    {
+      "file": "typical-invoice-en.pdf",
+      "bytes": 28703,
+      "sha256": "a79d4ff74b9aea83a4a073ea4095f69125698d3cc36f44cafb676c6e06584025"
+    },
+    {
+      "file": "typical-invoice-multipage.pdf",
+      "bytes": 30840,
+      "sha256": "de06a70f390f0878cd41ef245458b6f8ab4b3b6ce603dcd25ed21d241263c45a"
+    },
+    {
+      "file": "typical-invoice-no.pdf",
+      "bytes": 29482,
+      "sha256": "a555f131e2b0ec6e2be0540897157735f0c6cfb22298efae6c2d3f64e6eac9c2"
+    },
+    {
+      "file": "typical-invoice-partial.pdf",
+      "bytes": 28960,
+      "sha256": "2cbe8e82cb7f039ad011ad99ebfc81978681bcef3ac52e01f0dd197b0ac7913f"
+    },
+    {
+      "file": "typical-invoice-preview.pdf",
+      "bytes": 29834,
+      "sha256": "72c221a30f848466c4f52a6bb89b49e1d49efdbeef4eb3f70aaa0983df01dd4c"
+    },
+    {
+      "file": "typical-invoice-qr.pdf",
+      "bytes": 31531,
+      "sha256": "5fc29f1d848daa7d415d6629a75b0688b467f8d651884841a5cfdf41168ec526"
+    },
+    {
+      "file": "typical-order-confirmation.pdf",
+      "bytes": 28428,
+      "sha256": "6543f63427d4a84afd5a64f27a33c22cb5863e84258da657881f06f4c8601588"
+    },
+    {
+      "file": "typical-packing-slip.pdf",
+      "bytes": 28786,
+      "sha256": "5f35b3e42c9dd5a7f23ab1dc9411f4df8ffc008de140a3906f4b6b5b62276f3f"
+    },
+    {
+      "file": "typical-paid-copy.pdf",
+      "bytes": 29298,
+      "sha256": "f6c13179783abcac184a7e0f0cdf091f262924077bb20faad2b57dfe4fb78c6a"
+    },
+    {
+      "file": "typical-payment-advice.pdf",
+      "bytes": 18818,
+      "sha256": "dae999c1e75ad1b77fb104df5dde68b63d6be29725db031bc2fdb396164efb82"
+    },
+    {
+      "file": "typical-payslip.pdf",
+      "bytes": 21751,
+      "sha256": "dae8728c8807b1fbf76aa71f6607628a46f51da4ed94a9d6b44f534c0d495f9e"
+    },
+    {
+      "file": "typical-picking-list.pdf",
+      "bytes": 20715,
+      "sha256": "cab0416a1cc7a04f4a3bc7c2c03530daa7ce64a2420728bffde2deebfc9d6cbb"
+    },
+    {
+      "file": "typical-proforma.pdf",
+      "bytes": 25332,
+      "sha256": "c84325d676a7e071f628888ff089a00ba968acba213b5d3024638a51cabe72f5"
+    },
+    {
+      "file": "typical-purchase-order.pdf",
+      "bytes": 24969,
+      "sha256": "270a5b428c6c7e81d60e86ee4db7e8cf58fe91c6b2a67e397a43b63bc5bbeb3b"
+    },
+    {
+      "file": "typical-quote.pdf",
+      "bytes": 25189,
+      "sha256": "1b09860f1f8c4686abed3cb4c7cf27b40afdbdddb7b36001f480329b5c5dfdbd"
+    },
+    {
+      "file": "typical-receipt.pdf",
+      "bytes": 23182,
+      "sha256": "903f36af0c41740900f3e3eb80913b5a3068a168dfa45676b887baf503338b54"
+    },
+    {
+      "file": "typical-reminder-en.pdf",
+      "bytes": 18597,
+      "sha256": "d529aa5af059c32b1e6c27d4c45dde97a9559f1efb9bc09954a21295a1bbea70"
+    },
+    {
+      "file": "typical-reminder.pdf",
+      "bytes": 28403,
+      "sha256": "090b26fbc83811fdab830e8c36eba539e6f732dba757fd26b73e3bb4d65148cd"
+    },
+    {
+      "file": "typical-shipping-label.pdf",
+      "bytes": 23500,
+      "sha256": "1e223d25ea3e405b588bc99ffc86883a81c797e0b65131d509aa712bda3e56cc"
+    },
+    {
+      "file": "typical-statement.pdf",
+      "bytes": 24567,
+      "sha256": "24ac60e27d56bb64d8d7f294c3e10cc4a42ed43496217abf8d27586930a860dc"
+    },
+    {
+      "file": "typical-sticker-sheet.pdf",
+      "bytes": 13358,
+      "sha256": "4e44d3be0483ba9480e151e1612387db8957be175275f866b78791edce9cefa6"
+    },
+    {
+      "file": "typical-timesheet.pdf",
+      "bytes": 19579,
+      "sha256": "24c4220a1abec2500cc32b8870f1511dd031c8325b4c91d9efad897a2a29dfc8"
+    },
+    {
+      "file": "typical-upca-shelf.pdf",
+      "bytes": 9601,
+      "sha256": "879da4c4dc544f335e9892549f2a023eb88d1bea5e7f72705aadd9de8c687f2e"
+    },
+    {
+      "file": "typical-vat-return.pdf",
+      "bytes": 19845,
+      "sha256": "20efac2d318fdc85d682c940506858f5ffdc290add64d96367ff7e854bb4e0c3"
+    },
+    {
+      "file": "upca-label.pdf",
+      "bytes": 9608,
+      "sha256": "06f7e959cb7d0cd0378012b313bbcdd31c2c56fdd22482fe58a1fbc7c9244630"
+    }
+  ]
+}

@@ -1,8 +1,7 @@
 # Research and architecture decision
 
 Decision date: 10 November 2026. Initial target: ReAI's future, controlled Skald
-PDF output, including invoices, reports and normalized scanned documents. No
-ReAI deployment or consumer integration is part of this repository.
+PDF output, including invoices, reports and normalized scanned documents. A local-only ReAI trial consumes the 1.0.0 release; production integration is outside this repository.
 
 ## Evaluated approaches
 
