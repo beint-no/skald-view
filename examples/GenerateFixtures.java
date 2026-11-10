@@ -49,6 +49,10 @@ public class GenerateFixtures {
     }
     public static void main(String[] args) throws Exception {
         directory=Path.of(args[0]);Files.createDirectories(directory);
+        if(args.length>1&&args[1].equals("unsupported")) {
+            write("unsupported-cmyk",Compression.BALANCED,false,pdf->pdf.addNewPage(new PageSize(300,300)).append("0 0 0 1 k\n"));
+            return;
+        }
         write("text-paint-modes",Compression.BALANCED,false,GenerateFixtures::paintModes);
         if(args.length>1&&args[1].equals("paint-modes")) return;
         write("invoice-flate",Compression.BALANCED,false,GenerateFixtures::invoice);

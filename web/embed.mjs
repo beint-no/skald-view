@@ -153,6 +153,7 @@ async function render() {
   }
 }
 function failure(error) {
+  delete document.documentElement.dataset.ready;
   $("paper").hidden = true;
   $("error").hidden = false;
   $("error").textContent = dictionary().failed;
@@ -169,6 +170,9 @@ async function open({ buffer, title, locale, source }) {
   doc = new SkaldDocument();
   pages = [];
   page = 0;
+  autoFit = true;
+  lastViewportWidth = $("viewport").clientWidth;
+  delete document.documentElement.dataset.ready;
   language =
     String(locale ?? "en").startsWith("no") ||
     String(locale ?? "").startsWith("nb")
@@ -245,11 +249,19 @@ $("paper").hidden = true;
 parent.postMessage({ type: "skald-view:ready" }, location.origin);
 
 let autoFit = true;
+let lastViewportWidth = -1;
+let resizeFrame;
 const observer = new ResizeObserver(() => {
-  if (autoFit && pages.length) {
+  const width = $("viewport").clientWidth;
+  if (width === lastViewportWidth) return;
+  lastViewportWidth = width;
+  cancelAnimationFrame(resizeFrame);
+  resizeFrame = requestAnimationFrame(() => {
+    if (!autoFit || !pages.length || !$("error").hidden) return;
+    const previous = scale;
     fit();
-    render();
-  }
+    if (Math.abs(scale - previous) > 1e-6) render();
+  });
 });
 observer.observe($("viewport"));
 for (const id of ["in", "out"]) {
