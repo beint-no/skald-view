@@ -521,11 +521,14 @@ impl Interpreter<'_> {
                         }
                         b"v" => {
                             let a = n(4)?;
-                            let last = path
-                                .segments()
-                                .last()
-                                .map(|s| s.end())
-                                .ok_or_else(|| bad("v without current point"))?;
+                            let last = match path.elements().last() {
+                                Some(vello_cpu::kurbo::PathEl::MoveTo(point)) => *point,
+                                _ => path
+                                    .segments()
+                                    .last()
+                                    .map(|s| s.end())
+                                    .ok_or_else(|| bad("v without current point"))?,
+                            };
                             path.curve_to(last, (a[0], a[1]).into(), (a[2], a[3]).into());
                         }
                         b"y" => {

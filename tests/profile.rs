@@ -145,3 +145,18 @@ fn truncated_eof_is_rejected() {
         );
     }
 }
+
+#[test]
+fn abbreviated_curve_can_follow_a_move_or_closed_subpath() {
+    for (short, full) in [
+        ("10 10 m 20 40 60 60 v S", "10 10 m 10 10 20 40 60 60 c S"),
+        (
+            "10 10 m 10 30 l 30 30 l h 20 40 60 60 v S",
+            "10 10 m 10 30 l 30 30 l h 10 10 20 40 60 60 c S",
+        ),
+    ] {
+        let mut a = Document::open(pdf(short.as_bytes(), "", ""), Limits::default()).unwrap();
+        let mut b = Document::open(pdf(full.as_bytes(), "", ""), Limits::default()).unwrap();
+        assert_eq!(a.render(0, 1.).unwrap().rgba, b.render(0, 1.).unwrap().rgba);
+    }
+}
