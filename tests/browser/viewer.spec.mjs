@@ -223,6 +223,13 @@ test("embedded auto-fit ignores height-only changes without resize loops", async
   expect(await page.evaluate(() => window.embeddedRenderCount)).toBe(
     initialRenders,
   );
+  const initialWidth = await frame.locator("#canvas").evaluate((c) => c.width);
+  await page
+    .locator("#resize-test")
+    .evaluate((iframe) => (iframe.style.width = "450px"));
+  await expect
+    .poll(() => frame.locator("#canvas").evaluate((c) => c.width))
+    .toBeGreaterThan(initialWidth);
   await page.route("**/unsupported-cmyk.pdf", (route) =>
     route.fulfill({
       contentType: "application/pdf",
