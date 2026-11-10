@@ -3,7 +3,7 @@
 A new PDF 2.0 viewer for controlled documents. Rust + WebAssembly, a worker-based
 browser library, Brotli streams, and experimental JPEG XL images. Apache-2.0.
 
-**1.0.0 implements the bounded `skald-pdf2-v1` profile for controlled Skald documents.**
+**1.0.1 implements the bounded `skald-pdf2-v1` profile for controlled Skald documents.**
 Its stable native/worker API and embedding archive are ready for a local ReAI trial.
 The [readiness report](docs/readiness-1.0.0.md) records coverage, exclusions and
 measured tradeoffs. ReAI production is unchanged; JPEG XL embedding remains experimental.
@@ -51,8 +51,8 @@ experimental output. It is not a finalized PDF interoperability contract.
 
 ## Release archive
 
-Download `skald-view-1.0.0-web.tar.gz` and its SHA-256 sidecar from
-[the release](https://github.com/beint-no/skald-view/releases/tag/v1.0.0).
+Download `skald-view-1.0.1-web.tar.gz` and its SHA-256 sidecar from
+[the release](https://github.com/beint-no/skald-view/releases/tag/v1.0.1).
 The archive is served as a unit; its `embed.html` uses a same-origin postMessage
 protocol documented in [the embedding guide](docs/embedding.md).
 

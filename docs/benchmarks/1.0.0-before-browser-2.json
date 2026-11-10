@@ -2094,13 +2094,13 @@
   "sizes": {
     "web/pkg/skald_view_bg.wasm": {
       "raw": 2641054,
-      "gzip": 922275,
-      "brotli": 673573
+      "gzip": 912601,
+      "brotli": 666643
     },
     "web/pkg/skald_view.js": {
       "raw": 8562,
-      "gzip": 2280,
-      "brotli": 2014
+      "gzip": 2271,
+      "brotli": 2007
     },
     "node_modules/pdfjs-dist/build/pdf.mjs": {
       "raw": 891540,
@@ -2113,5 +2113,6 @@
       "brotli": 383507
     }
   },
-  "sourceRevision": "a69248b62541bc305b92ed35d0c7fa9cf7690b96"
+  "sourceRevision": "a69248b62541bc305b92ed35d0c7fa9cf7690b96",
+  "sizeMetadataNote": "WASM/binding compression metadata corrected from the retained baseline build; timing records are unchanged."
 }

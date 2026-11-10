@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { readFileSync } from "node:fs";
 test("opens Brotli invoice, renders pixels and exposes searchable text", async ({
   page,
 }) => {
@@ -166,4 +167,92 @@ test("embedded release protocol opens bytes and exposes safe links", async ({
     "rel",
     "noopener noreferrer",
   );
+});
+
+test("embedded auto-fit ignores height-only changes without resize loops", async ({
+  page,
+}) => {
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/");
+  await page.evaluate(async () => {
+    const bytes = await fetch(
+      "/tests/skald-corpus/reai-16-faktura-signert.pdf",
+    ).then((r) => r.arrayBuffer());
+    const iframe = document.createElement("iframe");
+    iframe.id = "resize-test";
+    iframe.style.cssText = "width:300px;height:220px";
+    window.embeddedRenderCount = 0;
+    window.addEventListener("message", (event) => {
+      if (
+        event.source === iframe.contentWindow &&
+        event.data?.type === "skald-view:rendered"
+      )
+        window.embeddedRenderCount++;
+      if (
+        event.source === iframe.contentWindow &&
+        event.origin === location.origin &&
+        event.data?.type === "skald-view:ready"
+      )
+        iframe.contentWindow.postMessage(
+          { type: "skald-view:open", buffer: bytes, locale: "no" },
+          location.origin,
+          [bytes],
+        );
+    });
+    iframe.src = "/web/embed.html";
+    document.body.append(iframe);
+  });
+  const frame = page.frameLocator("#resize-test");
+  await expect(frame.locator("#status")).toContainText(
+    "Signaturen er ikke verifisert",
+  );
+  await expect
+    .poll(() => page.evaluate(() => window.embeddedRenderCount))
+    .toBeGreaterThan(0);
+  const initialRenders = await page.evaluate(() => window.embeddedRenderCount);
+  await page.evaluate(async () => {
+    for (const height of [300, 420, 220, 350, 240]) {
+      document.querySelector("#resize-test").style.height = `${height}px`;
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      );
+    }
+  });
+  await expect(frame.locator("html")).toHaveAttribute("data-ready", "true");
+  expect(await page.evaluate(() => window.embeddedRenderCount)).toBe(
+    initialRenders,
+  );
+  const initialWidth = await frame.locator("#canvas").evaluate((c) => c.width);
+  await page
+    .locator("#resize-test")
+    .evaluate((iframe) => (iframe.style.width = "450px"));
+  await expect
+    .poll(() => frame.locator("#canvas").evaluate((c) => c.width))
+    .toBeGreaterThan(initialWidth);
+  await page.route("**/unsupported-cmyk.pdf", (route) =>
+    route.fulfill({
+      contentType: "application/pdf",
+      body: readFileSync("tests/pdfs/unsupported-cmyk.pdf"),
+    }),
+  );
+  await page.evaluate(async () => {
+    const buffer = await fetch("/unsupported-cmyk.pdf").then((r) =>
+      r.arrayBuffer(),
+    );
+    document
+      .querySelector("#resize-test")
+      .contentWindow.postMessage(
+        { type: "skald-view:open", buffer },
+        location.origin,
+        [buffer],
+      );
+  });
+  await expect(frame.locator("#error")).toBeVisible();
+  await page.evaluate(async () => {
+    for (let i = 0; i < 5; i++)
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+  });
+  await expect(frame.locator("html")).not.toHaveAttribute("data-ready", "true");
+  expect(errors).toEqual([]);
 });
