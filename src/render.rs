@@ -10,12 +10,13 @@ use vello_cpu::{
     peniko::Fill,
 };
 
-#[derive(Serialize)]
+#[derive(Clone, Serialize)]
+#[non_exhaustive]
 pub struct RenderedPage {
     pub width: u32,
     pub height: u32,
     #[serde(skip)]
-    pub rgba: Vec<u8>,
+    pub rgba: std::sync::Arc<[u8]>,
     pub text: Vec<TextRun>,
 }
 impl Document {
@@ -24,6 +25,13 @@ impl Document {
         if !scale.is_finite() || scale <= 0. || scale > 8. {
             return Err(bad("scale must be finite, positive and <= 8"));
         }
+        if let Some((page, bits, frame)) = &self.frame
+            && *page == index
+            && *bits == scale.to_bits()
+        {
+            return Ok(frame.clone());
+        }
+        self.clear_frame_cache();
         let info = self.page_info(index)?.clone();
         let width = (info.width * scale).ceil();
         let height = (info.height * scale).ceil();
@@ -66,6 +74,10 @@ impl Document {
                 Paint::Solid(c, a) => {
                     context.set_paint(AlphaColor::<Srgb>::new([c[0], c[1], c[2], *a]))
                 }
+                Paint::Gradient(gradient, transform) => {
+                    context.set_paint(gradient.clone());
+                    context.set_paint_transform(*transform);
+                }
                 Paint::Image(image, alpha) => {
                     if *alpha != 1. {
                         context.push_layer(None, None, Some(*alpha), None, None);
@@ -84,11 +96,29 @@ impl Document {
                     ]));
                 }
             }
+            let composed;
+            let path = if let Some(glyphs) = &draw.glyphs {
+                let mut p = vello_cpu::kurbo::BezPath::new();
+                for glyph in glyphs {
+                    p.extend(
+                        glyph
+                            .outline
+                            .elements()
+                            .iter()
+                            .copied()
+                            .map(|el| glyph.transform * el),
+                    );
+                }
+                composed = p;
+                &composed
+            } else {
+                &draw.path
+            };
             if let Some(stroke) = &draw.stroke {
                 context.set_stroke(stroke.clone());
-                context.stroke_path(&draw.path);
+                context.stroke_path(path);
             } else {
-                context.fill_path(&draw.path);
+                context.fill_path(path);
             }
             if matches!(&draw.paint,Paint::Image(_,alpha) if *alpha!=1.) {
                 context.pop_layer();
@@ -109,12 +139,20 @@ impl Document {
                 t
             })
             .collect();
-        Ok(RenderedPage {
+        let frame = RenderedPage {
             width: width as u32,
             height: height as u32,
-            rgba: pixmap.take_rgba8(vello_cpu::peniko::ImageAlphaType::AlphaPremultiplied),
+            rgba: pixmap
+                .take_rgba8(vello_cpu::peniko::ImageAlphaType::AlphaPremultiplied)
+                .into(),
             text,
-        })
+        };
+        if frame.rgba.len() <= self.limits.frame_cache_bytes
+            && self.reserve_cache(frame.rgba.len()).is_ok()
+        {
+            self.frame = Some((index, scale.to_bits(), frame.clone()));
+        }
+        Ok(frame)
     }
 }
 
@@ -144,7 +182,7 @@ mod wasm {
         }
         pub fn render(&mut self, page: usize, scale: f64) -> std::result::Result<Vec<u8>, JsError> {
             let mut result = self.document.render(page, scale)?;
-            let rgba = std::mem::take(&mut result.rgba);
+            let rgba = std::mem::take(&mut result.rgba).to_vec();
             self.last = Some(result);
             Ok(rgba)
         }
@@ -152,6 +190,9 @@ mod wasm {
             Ok(serde_json::to_string(
                 &self.last.as_ref().ok_or_else(|| bad("no rendered frame"))?,
             )?)
+        }
+        pub fn frame_cache_bytes(&self) -> usize {
+            self.document.frame_cache_bytes()
         }
         pub fn cached_bytes(&self) -> usize {
             self.document.cached_bytes()

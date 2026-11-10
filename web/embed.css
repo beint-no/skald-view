@@ -1,0 +1,123 @@
+:root {
+  font:
+    13px system-ui,
+    sans-serif;
+  color: #26302c;
+  background: #edf0ec;
+  color-scheme: light;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  background: #fff;
+  padding: 8px;
+  border-bottom: 1px solid #d3dbd4;
+}
+button,
+input,
+a {
+  font: inherit;
+}
+button {
+  border: 1px solid #d3dbd4;
+  border-radius: 4px;
+  background: #fff;
+  padding: 5px 9px;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+input {
+  width: 48px;
+  padding: 4px;
+  border: 1px solid #d3dbd4;
+  border-radius: 4px;
+}
+a {
+  color: #175d89;
+}
+nav a {
+  margin-left: auto;
+  font-size: 12px;
+}
+#status {
+  font-size: 11px;
+  margin: 0;
+  padding: 5px 9px;
+  color: #59645d;
+}
+#viewport {
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: safe center;
+  padding: 12px;
+}
+#paper {
+  position: relative;
+  background: #fff;
+  box-shadow: 0 2px 8px #0002;
+  line-height: 0;
+  flex-shrink: 0;
+}
+canvas {
+  display: block;
+}
+#text,
+#links {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  line-height: 1;
+}
+#text span {
+  position: absolute;
+  white-space: pre;
+  color: transparent;
+  transform-origin: 0 0;
+  cursor: text;
+  line-height: 1;
+}
+#text span::selection {
+  background: #438fca66;
+}
+#links {
+  pointer-events: none;
+}
+#links a {
+  position: absolute;
+  pointer-events: auto;
+}
+#links a:hover,
+#links a:focus {
+  outline: 2px solid #438fca;
+}
+#error {
+  max-width: 38em;
+  line-height: 1.6;
+  background: #fff;
+  padding: 18px;
+  border: 1px solid #d3dbd4;
+  border-radius: 5px;
+}
+output {
+  white-space: nowrap;
+}

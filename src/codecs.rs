@@ -24,6 +24,7 @@ pub(crate) fn decode_stream(source: &[u8], dict: &Dict, limits: &Limits) -> Resu
             _ => return Err(bad("DecodeParms")),
         };
         data = match *filter {
+            "ASCII85Decode" => ascii85(&data, limits.stream_bytes)?,
             "FlateDecode" => {
                 let mut decoder = flate2::read::ZlibDecoder::new(data.as_slice());
                 let mut result = Vec::new();
@@ -344,5 +345,84 @@ mod boundaries {
             )
             .is_err()
         );
+    }
+}
+
+fn ascii85(input: &[u8], maximum: usize) -> Result<Vec<u8>> {
+    let mut result = Vec::new();
+    let mut group = [0u8; 5];
+    let mut count = 0;
+    let mut end = false;
+    let mut cursor = 0;
+    while cursor < input.len() {
+        let byte = input[cursor];
+        cursor += 1;
+        if byte.is_ascii_whitespace() {
+            continue;
+        }
+        if byte == b'~' {
+            if input.get(cursor) != Some(&b'>') {
+                return Err(bad("ASCII85 end marker"));
+            }
+            cursor += 1;
+            end = true;
+            break;
+        }
+        if byte == b'z' {
+            if count != 0 {
+                return Err(bad("ASCII85 z inside group"));
+            }
+            result.extend([0; 4]);
+        } else {
+            if !(b'!'..=b'u').contains(&byte) {
+                return Err(bad("ASCII85 digit"));
+            }
+            group[count] = byte - b'!';
+            count += 1;
+            if count == 5 {
+                result.extend(ascii85_word(&group)?.to_be_bytes());
+                count = 0;
+            }
+        }
+        if result.len() > maximum {
+            return Err(limit("ASCII85 output"));
+        }
+    }
+    if !end || input[cursor..].iter().any(|b| !b.is_ascii_whitespace()) {
+        return Err(bad("ASCII85 missing/trailing end marker"));
+    }
+    if count == 1 {
+        return Err(bad("ASCII85 final group"));
+    }
+    if count > 1 {
+        let length = count - 1;
+        for digit in &mut group[count..] {
+            *digit = 84;
+        }
+        result.extend(&ascii85_word(&group)?.to_be_bytes()[..length]);
+    }
+    if result.len() > maximum {
+        return Err(limit("ASCII85 output"));
+    }
+    Ok(result)
+}
+fn ascii85_word(group: &[u8; 5]) -> Result<u32> {
+    group.iter().try_fold(0u32, |n, &v| {
+        n.checked_mul(85)
+            .and_then(|n| n.checked_add(v as u32))
+            .ok_or_else(|| bad("ASCII85 group overflow"))
+    })
+}
+#[cfg(test)]
+mod ascii85_tests {
+    use super::*;
+    #[test]
+    fn vectors_and_boundaries() {
+        assert_eq!(ascii85(b"87cURD]j7BEbo80~>", 100).unwrap(), b"Hello world!");
+        assert_eq!(ascii85(b"z~>", 4).unwrap(), [0; 4]);
+        for b in [b"uuuuu~>".as_slice(), b"!~>", b"z", b"!z~>", b"z~>x"] {
+            assert!(ascii85(b, 100).is_err());
+        }
+        assert!(ascii85(b"z~>", 3).is_err());
     }
 }

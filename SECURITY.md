@@ -1,7 +1,7 @@
 # Security
 
-This is experimental parser/renderer software, not yet security-reviewed for
-production untrusted uploads. Report security issues privately using GitHub's
+The stable 1.0 contract is a bounded profile for controlled generated documents.
+It has not received an independent security review for unrestricted uploads. Report security issues privately using GitHub's
 private vulnerability reporting for this repository; do not attach private PDFs
 or exploit details to public issues.
 

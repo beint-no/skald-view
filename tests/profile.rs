@@ -1,8 +1,11 @@
 use skald_view::{Document, Limits};
 use std::io::Write;
 fn pdf(content: &[u8], page_extra: &str, tree_extra: &str) -> Vec<u8> {
+    pdf_resources(content, page_extra, tree_extra, "<< >>")
+}
+fn pdf_resources(content: &[u8], page_extra: &str, tree_extra: &str, resources: &str) -> Vec<u8> {
     let mut source = b"%PDF-2.0\n".to_vec();
-    let objects=[b"<< /Type /Catalog /Pages 2 0 R >>".to_vec(),format!("<< /Type /Pages /Count 1 /Kids [3 0 R] {tree_extra} >>").into_bytes(),format!("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 100 100] /Resources << >> /Contents 4 0 R {page_extra} >>").into_bytes(),{let mut v=format!("<< /Length {} >>\nstream\n",content.len()).into_bytes();v.extend(content);v.extend(b"\nendstream");v}];
+    let objects=[b"<< /Type /Catalog /Pages 2 0 R >>".to_vec(),format!("<< /Type /Pages /Count 1 /Kids [3 0 R] {tree_extra} >>").into_bytes(),format!("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 100 100] /Resources {resources} /Contents 4 0 R {page_extra} >>").into_bytes(),{let mut v=format!("<< /Length {} >>\nstream\n",content.len()).into_bytes();v.extend(content);v.extend(b"\nendstream");v}];
     let mut offsets = vec![0];
     for (i, value) in objects.iter().enumerate() {
         offsets.push(source.len());
@@ -40,7 +43,7 @@ fn accepts_minimal_pdf2_and_uses_bottom_left_coordinates() {
 fn rejects_unsupported_visual_semantics() {
     for extra in [
         "/Rotate 90",
-        "/Annots []",
+        "/Annots [<< /Subtype /Text /Rect [0 0 10 10] >>]",
         "/UserUnit 2",
         "/Group << /S /Transparency >>",
     ] {
@@ -51,6 +54,22 @@ fn rejects_unsupported_visual_semantics() {
     }
     for extra in ["/Rotate 90", "/CropBox [0 0 20 20]"] {
         assert!(Document::open(pdf(b"", "", extra), Limits::default()).is_err());
+    }
+}
+#[test]
+fn links_reject_hidden_flags_alternate_borders_and_quadrilaterals() {
+    for extra in [
+        "",
+        "/F 4",
+        "/F 2",
+        "/BS << /W 1 >>",
+        "/QuadPoints [0 0 10 0 10 10 0 10]",
+    ] {
+        let annotation = format!(
+            "/Annots [<< /Subtype /Link /Rect [0 0 10 10] /Border [0 0 0] /A << /S /URI /URI (https://example.com) >> {extra} >>]"
+        );
+        let result = Document::open(pdf(b"", &annotation, ""), Limits::default());
+        assert_eq!(result.is_ok(), matches!(extra, "" | "/F 4"), "{extra}");
     }
 }
 #[test]
@@ -158,5 +177,31 @@ fn abbreviated_curve_can_follow_a_move_or_closed_subpath() {
         let mut a = Document::open(pdf(short.as_bytes(), "", ""), Limits::default()).unwrap();
         let mut b = Document::open(pdf(full.as_bytes(), "", ""), Limits::default()).unwrap();
         assert_eq!(a.render(0, 1.).unwrap().rgba, b.render(0, 1.).unwrap().rgba);
+    }
+}
+
+#[test]
+fn axial_rgb_gradients_match_linear_samples_and_reject_unimplemented_ranges() {
+    for (extra, range, valid) in [
+        ("", "", true),
+        ("/Domain [2 3]", "", false),
+        ("", "/Range [0 0.5 0 0.5 0 0.5]", false),
+    ] {
+        let resources = format!(
+            "<< /Shading << /G << /ShadingType 2 /ColorSpace /DeviceRGB /Coords [0 0 100 0] /Extend [true true] {extra} /Function << /FunctionType 2 /Domain [0 1] /C0 [1 0 0] /C1 [0 0 1] /N 1 {range} >> >> >> >>"
+        );
+        let mut d = Document::open(
+            pdf_resources(b"/G sh", "", "", &resources),
+            Limits::default(),
+        )
+        .unwrap();
+        let result = d.render(0, 1.);
+        if !valid {
+            assert!(result.is_err());
+            continue;
+        }
+        let f = result.unwrap();
+        let p = &f.rgba[(50 * 100 + 50) * 4..(50 * 100 + 50) * 4 + 4];
+        assert!(p[0].abs_diff(126) <= 3 && p[1] == 0 && p[2].abs_diff(129) <= 3);
     }
 }

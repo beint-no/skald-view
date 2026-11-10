@@ -39,8 +39,18 @@ public class GenerateFixtures {
         return alpha ? ImageData.fromRgb(w,h,rgb,mask) : ImageData.fromRgb(w,h,rgb);
     }
     static void image(PdfDocument pdf,ImageData image) {var p=pdf.addNewPage(new PageSize(640,480));image.drawOn(pdf,p,0,0,640,480);}
+    static void paintModes(PdfDocument pdf) {
+        var page=pdf.addNewPage(new PageSize(640,300));var font=SkaldSans.regular();
+        for(int mode=0;mode<=2;mode++) {
+            var run=font.glyphRun("Text paint mode "+mode+": 0123456789");var name=page.registerFont(font,run);
+            var hex=new StringBuilder();for(int gid:run.glyphs())hex.append(String.format("%04X",gid));
+            page.append("0.1 0.3 0.7 rg 0.8 0.2 0.1 RG 0.6 w BT /"+name+" 26 Tf "+mode+" Tr 1 0 0 1 30 "+(230-mode*80)+" Tm <"+hex+"> Tj ET\n");
+        }
+    }
     public static void main(String[] args) throws Exception {
         directory=Path.of(args[0]);Files.createDirectories(directory);
+        write("text-paint-modes",Compression.BALANCED,false,GenerateFixtures::paintModes);
+        if(args.length>1&&args[1].equals("paint-modes")) return;
         write("invoice-flate",Compression.BALANCED,false,GenerateFixtures::invoice);
         write("invoice-brotli",Compression.BROTLI_MAXIMUM,false,GenerateFixtures::invoice);
         write("report-brotli",Compression.BROTLI_BALANCED,false,pdf->{try(var layout=new org.skaldpdf.layout.Document(pdf)) {

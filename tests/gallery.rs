@@ -66,7 +66,7 @@ fn lossy_jxl_has_real_bounded_pixel_differences() {
         let mae = control
             .rgba
             .iter()
-            .zip(&candidate.rgba)
+            .zip(candidate.rgba.iter())
             .map(|(a, b)| (*a as f64 - *b as f64).abs())
             .sum::<f64>()
             / control.rgba.len() as f64;
@@ -95,11 +95,11 @@ fn cached_render_does_not_grow_decoded_cache() {
     let mut d = load("invoice-brotli");
     let width = d.page_info(0).unwrap().width;
     d.render(0, 1.).unwrap();
-    let bytes = d.cached_bytes();
+    let bytes = d.cached_bytes() - d.frame_cache_bytes();
     for scale in [0.5, 1., 1.5] {
         let f = d.render(0, scale).unwrap();
         assert_eq!(f.width, (width * scale).ceil() as u32);
-        assert_eq!(bytes, d.cached_bytes());
+        assert_eq!(bytes, d.cached_bytes() - d.frame_cache_bytes());
     }
 }
 #[test]
@@ -170,6 +170,7 @@ fn independently_rendered_mupdf_goldens() {
         ("mask-flate", "mask"),
         ("unicode-brotli", "unicode"),
         ("report-brotli", "report"),
+        ("text-paint-modes", "text-paint-modes"),
     ] {
         let f = frame(fixture);
         let (w, h, rgba) = read_png(Path::new(&format!("tests/references/{golden}.png")));

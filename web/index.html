@@ -1,7 +1,120 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Skald View — document lab</title><link rel="stylesheet" href="/web/style.css"><script type="module" src="/web/app.mjs"></script></head>
-<body><header><a class="brand" href="/"><span class="mark">S<span>↗</span></span><span>skald<span class="light"> / view</span></span></a><span class="header-label">DOCUMENT LAB <span class="pill">EXPERIMENTAL</span></span><a href="https://github.com/beint-no/skald-view" target="_blank" rel="noreferrer">Source ↗</a></header>
-<div class="shell"><aside id="sidebar"><div class="intro"><p class="eyebrow">A CLEARER VIEW</p><h1>Small files.<br>Full detail.</h1><p>A new PDF 2.0 engine, built for the documents we make next.</p></div><button id="open" class="open-button">＋ Open a local PDF <span>⌘ O</span></button><input id="file" type="file" accept="application/pdf,.pdf" hidden><div class="gallery-heading"><h2>Explore the examples</h2><span id="example-count"></span></div><nav id="gallery" aria-label="Example documents"></nav><div class="aside-footer">Files stay in this browser.<br>Rust · WebAssembly · Vello CPU</div></aside>
-<main><div class="document-heading"><div><p class="eyebrow" id="document-kind">EXAMPLE DOCUMENT</p><h2 id="title">Opening the document…</h2><p id="description"></p></div><button id="gallery-toggle" class="mobile-only">Examples</button><a id="download" download>Download ↓</a></div>
-<div class="toolbar" aria-label="Document controls"><div class="page-controls"><button id="previous" aria-label="Previous page">←</button><label><span class="sr-only">Page</span><input id="page" type="number" min="1" value="1" aria-label="Page number"></label><span id="page-count">/ —</span><button id="next" aria-label="Next page">→</button></div><div class="zoom-controls"><button id="zoom-out" aria-label="Zoom out">−</button><output id="zoom">100%</output><button id="zoom-in" aria-label="Zoom in">＋</button><button id="fit">Fit width</button></div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Find on this page" aria-label="Find on this page"><output id="matches"></output></label></div>
-<div id="status" role="status" aria-live="polite">Starting the rendering worker…</div><section id="viewport" tabindex="0" aria-label="Document page"><div id="paper"><canvas id="canvas" aria-hidden="true"></canvas><div id="text" class="text-layer" role="document" aria-label="Selectable page text"></div></div><div id="error" role="alert" hidden></div></section>
-<footer class="metrics" aria-label="Rendering measurements"><div><span>DOCUMENT</span><strong id="bytes">—</strong></div><div><span>FIRST PAGE¹</span><strong id="first">—</strong></div><div><span>LAST RENDER²</span><strong id="render">—</strong></div><div><span>TRACKED CACHE³</span><strong id="cache">—</strong></div><span class="metric-note">¹ Open + first render, after fetch. ² Worker render, excluding paint. ³ Decoded assets + estimated scene storage; not total memory.</span></footer><p class="profile-note">A strict PDF 2.0 viewing profile. JXL embedding is provisional. Unsupported features fail explicitly. <a href="https://github.com/beint-no/skald-view/blob/main/docs/profile.md">Read the profile ↗</a></p></main></div></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Skald View — document lab</title>
+    <link rel="stylesheet" href="/web/style.css" />
+    <script type="module" src="/web/app.mjs"></script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="/"
+        ><span class="mark">S<span>↗</span></span
+        ><span>skald<span class="light"> / view</span></span></a
+      ><span class="header-label"
+        >DOCUMENT LAB <span class="pill">EXPERIMENTAL</span></span
+      ><a
+        href="https://github.com/beint-no/skald-view"
+        target="_blank"
+        rel="noreferrer"
+        >Source ↗</a
+      >
+    </header>
+    <div class="shell">
+      <aside id="sidebar">
+        <div class="intro">
+          <p class="eyebrow">A CLEARER VIEW</p>
+          <h1>Small files.<br />Full detail.</h1>
+          <p>A new PDF 2.0 engine, built for the documents we make next.</p>
+        </div>
+        <button id="open" class="open-button">
+          ＋ Open a local PDF <span>⌘ O</span></button
+        ><input id="file" type="file" accept="application/pdf,.pdf" hidden />
+        <div class="gallery-heading">
+          <h2>Explore the examples</h2>
+          <span id="example-count"></span>
+        </div>
+        <nav id="gallery" aria-label="Example documents"></nav>
+        <div class="aside-footer">
+          Files stay in this browser.<br />Rust · WebAssembly · Vello CPU
+        </div>
+      </aside>
+      <main>
+        <div class="document-heading">
+          <div>
+            <p class="eyebrow" id="document-kind">EXAMPLE DOCUMENT</p>
+            <h2 id="title">Opening the document…</h2>
+            <p id="description"></p>
+          </div>
+          <button id="gallery-toggle" class="mobile-only">Examples</button
+          ><a id="download" download>Download ↓</a>
+        </div>
+        <div class="toolbar" aria-label="Document controls">
+          <div class="page-controls">
+            <button id="previous" aria-label="Previous page">←</button
+            ><label
+              ><span class="sr-only">Page</span
+              ><input
+                id="page"
+                type="number"
+                min="1"
+                value="1"
+                aria-label="Page number" /></label
+            ><span id="page-count">/ —</span
+            ><button id="next" aria-label="Next page">→</button>
+          </div>
+          <div class="zoom-controls">
+            <button id="zoom-out" aria-label="Zoom out">−</button
+            ><output id="zoom">100%</output
+            ><button id="zoom-in" aria-label="Zoom in">＋</button
+            ><button id="fit">Fit width</button>
+          </div>
+          <label class="search"
+            ><span aria-hidden="true">⌕</span
+            ><input
+              id="search"
+              type="search"
+              placeholder="Find on this page"
+              aria-label="Find on this page" /><output id="matches"></output
+          ></label>
+        </div>
+        <div id="status" role="status" aria-live="polite">
+          Starting the rendering worker…
+        </div>
+        <section id="viewport" tabindex="0" aria-label="Document page">
+          <div id="paper">
+            <canvas id="canvas" aria-hidden="true"></canvas>
+            <div
+              id="text"
+              class="text-layer"
+              role="document"
+              aria-label="Selectable page text"
+            ></div>
+          </div>
+          <div id="error" role="alert" hidden></div>
+        </section>
+        <footer class="metrics" aria-label="Rendering measurements">
+          <div><span>DOCUMENT</span><strong id="bytes">—</strong></div>
+          <div><span>FIRST PAGE¹</span><strong id="first">—</strong></div>
+          <div><span>LAST RENDER²</span><strong id="render">—</strong></div>
+          <div><span>TRACKED CACHE³</span><strong id="cache">—</strong></div>
+          <span class="metric-note"
+            >¹ Open + first render, after fetch. ² Worker render, excluding
+            paint. ³ Decoded assets + estimated scene storage; not total
+            memory.</span
+          >
+        </footer>
+        <p class="profile-note">
+          A strict PDF 2.0 viewing profile. JXL embedding is provisional.
+          Unsupported features fail explicitly.
+          <a
+            href="https://github.com/beint-no/skald-view/blob/main/docs/profile.md"
+            >Read the profile ↗</a
+          >
+        </p>
+      </main>
+    </div>
+  </body>
+</html>
