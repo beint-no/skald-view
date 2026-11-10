@@ -1,0 +1,142 @@
+[
+  {
+    "id": "invoice-brotli",
+    "title": "Nordlys invoice",
+    "detail": "Embedded fonts · tables · Norwegian text",
+    "group": "Documents",
+    "codec": "Brotli"
+  },
+  {
+    "id": "invoice-flate",
+    "title": "Invoice · control",
+    "detail": "Same pages, conventional stream compression",
+    "group": "Documents",
+    "codec": "Flate"
+  },
+  {
+    "id": "report-brotli",
+    "title": "250-row activity report",
+    "detail": "Multiple pages · repeated table headers",
+    "group": "Documents",
+    "codec": "Brotli"
+  },
+  {
+    "id": "unicode-brotli",
+    "title": "Words across languages",
+    "detail": "Norwegian · Greek · Cyrillic · selectable text",
+    "group": "Documents",
+    "codec": "Brotli"
+  },
+  {
+    "id": "raster-flate",
+    "title": "Color field · control",
+    "detail": "640 × 480 · original raster samples",
+    "group": "Images",
+    "codec": "Flate"
+  },
+  {
+    "id": "raster-jxl-0",
+    "title": "Color field · exact",
+    "detail": "JPEG XL distance 0 · lossless",
+    "group": "Images",
+    "codec": "JXL + Brotli"
+  },
+  {
+    "id": "raster-jxl-1",
+    "title": "Color field · photo quality",
+    "detail": "JPEG XL distance 1 · lossy",
+    "group": "Images",
+    "codec": "JXL + Brotli"
+  },
+  {
+    "id": "raster-jxl-2",
+    "title": "Color field · compact",
+    "detail": "JPEG XL distance 2 · lossy",
+    "group": "Images",
+    "codec": "JXL + Brotli"
+  },
+  {
+    "id": "jpeg-flate",
+    "title": "JPEG · control",
+    "detail": "Conventional JPEG image inside PDF",
+    "group": "Images",
+    "codec": "JPEG"
+  },
+  {
+    "id": "jpeg-reversible-jxl",
+    "title": "JPEG · reversible JXL",
+    "detail": "JPEG recompression without another lossy generation",
+    "group": "Images",
+    "codec": "JXL + Brotli"
+  },
+  {
+    "id": "mask-flate",
+    "title": "Transparency · control",
+    "detail": "External grayscale soft mask",
+    "group": "Graphics",
+    "codec": "Flate"
+  },
+  {
+    "id": "mask-brotli",
+    "title": "Transparency · Brotli",
+    "detail": "Same soft mask with Brotli streams",
+    "group": "Graphics",
+    "codec": "Brotli"
+  },
+  {
+    "id": "vectors-brotli",
+    "title": "Paths, clips & transforms",
+    "detail": "Vector geometry · dashed strokes · clipping",
+    "group": "Graphics",
+    "codec": "Brotli"
+  },
+  {
+    "id": "rejected-legacy",
+    "title": "Explicit profile rejection",
+    "detail": "PDF 1.7 header · expected to be rejected",
+    "group": "Boundaries",
+    "codec": "Unsupported"
+  },
+  {
+    "id": "gray-flate",
+    "title": "Grayscale · control",
+    "detail": "One component · exact gray samples",
+    "group": "Grayscale",
+    "codec": "Flate"
+  },
+  {
+    "id": "gray-jpeg",
+    "title": "Grayscale · JPEG",
+    "detail": "One component JPEG decoding",
+    "group": "Grayscale",
+    "codec": "JPEG"
+  },
+  {
+    "id": "gray-jxl-0",
+    "title": "Grayscale · exact JXL",
+    "detail": "JPEG XL distance 0 · lossless",
+    "group": "Grayscale",
+    "codec": "JXL + Brotli"
+  },
+  {
+    "id": "gray-jxl-2",
+    "title": "Grayscale · compact JXL",
+    "detail": "JPEG XL distance 2 · lossy",
+    "group": "Grayscale",
+    "codec": "JXL + Brotli"
+  },
+  {
+    "id": "mask-jxl",
+    "title": "JPEG XL + transparency",
+    "detail": "Lossless JXL with an external soft mask",
+    "group": "More examples",
+    "codec": "JXL + Brotli"
+  },
+  {
+    "id": "shared-image-report",
+    "title": "16 pages, one image",
+    "detail": "Shared image decoding and page cache reuse",
+    "group": "More examples",
+    "codec": "JXL + Brotli"
+  }
+]

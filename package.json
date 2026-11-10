@@ -1,0 +1,18 @@
+{
+  "name": "@beint/skald-view",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test web/*.test.mjs",
+    "test:browser": "playwright test",
+    "benchmark:browser": "node scripts/benchmark-browser.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.0",
+    "pdfjs-dist": "6.5.438"
+  }
+}

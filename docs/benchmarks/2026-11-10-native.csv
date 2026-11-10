@@ -1,0 +1,13 @@
+fixture,scenario,median_ms,p95_ms,iterations,cached_bytes
+invoice-flate,open-first-page,0.6047,0.7587,50,619429
+invoice-flate,cached-first-page,0.2711,0.3375,50,619429
+invoice-brotli,open-first-page,0.6573,0.8523,50,619429
+invoice-brotli,cached-first-page,0.2852,0.3417,50,619429
+report-brotli,open-first-page,1.4151,1.6239,50,1878057
+report-brotli,cached-first-page,0.8069,0.9053,50,1878057
+raster-jxl-0,open-first-page,18.6086,19.5261,50,1230379
+raster-jxl-0,cached-first-page,0.1341,0.1372,50,1230379
+raster-jxl-1,open-first-page,4.1082,4.2831,50,1239061
+raster-jxl-1,cached-first-page,0.1344,0.1355,50,1239061
+raster-jxl-2,open-first-page,4.4914,4.6926,50,1237362
+raster-jxl-2,cached-first-page,0.1232,0.1343,50,1237362

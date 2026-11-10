@@ -1,0 +1,12 @@
+Skald View
+Copyright 2026 Skald View contributors
+
+Example PDFs and reference images contain fictional data generated with Skald
+PDF. Embedded IBM Plex Sans subsets are licensed under the SIL Open Font License
+1.1, reproduced in docs/licenses/IBM-Plex-OFL-1.1.txt.
+
+Runtime primitives include Vello CPU, jxl-rs, brotli-decompressor, zune-jpeg,
+ttf-parser, flate2, serde and wasm-bindgen under their respective permissive
+licenses. Source versions are recorded in Cargo.lock. Distributions must retain
+applicable upstream notices and license texts. PDF.js and Playwright are dev-only
+comparison/testing dependencies and are not imported by the viewer runtime.
